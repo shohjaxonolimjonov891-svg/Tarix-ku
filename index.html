@@ -1,31 +1,221 @@
-DTM · Milliy sertifikat
-Tarix-ku
-UZ
-Muallif: Olimjonov Shohjaxon ·
-Kartalar Vaqt o‘qi Qidiruv
-
-
-
-
-Bosib orqa tomon
-
-Imtihon eslatmasi
-
-Qayta takrorlash Bildim
-Sessiya tugadi. Natija yuborildi.
-Nuqtani bosing.
-
-Hammasi Hukmdor Urush Madaniyat Islohot
-
-
-Ism va familiya
-Progress saqlanadi.
-Boshlash
-
-
-
-
-Imtihon eslatmasi
-
-Yopish
-© 2026 Olimjonov Shohjaxon · Tarix-ku
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="Olimjonov Shohjaxon">
+<title>Tarix-ku</title>
+<style>
+:root{--ink:#0F172A;--gold:#F59E0B;--paper:#F8FAFC;--text:#0F172A;--card:#fff;--muted:#64748b;--line:#e2e8f0}
+.dark{--paper:#0F172A;--text:#F8FAFC;--card:#1e293b;--muted:#94a3b8;--line:#334155}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,sans-serif;background:var(--paper);color:var(--text)}
+header{position:sticky;top:0;z-index:20;background:var(--ink);color:#fff;padding:14px 14px 10px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:8px}
+h1{margin:0;font-size:22px}
+.sub{font-size:11px;color:#F59E0B;letter-spacing:.12em;text-transform:uppercase;margin:0}
+.author{font-size:11px;color:#cbd5e1;text-align:right}
+nav{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:10px}
+nav button, .acts button, .close, .go{border:0;padding:10px;font-weight:700}
+nav button{background:#ffffff1a;color:#fff;border-radius:10px}
+nav button.on{background:var(--gold);color:var(--ink)}
+main{max-width:720px;margin:0 auto;padding:16px 14px 40px}
+.panel{display:none}.panel.on{display:block}
+.meta{display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}
+.bar{height:6px;background:var(--line);border-radius:99px;margin:6px 0 14px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--gold)}
+.scene{perspective:1200px;width:100%;border:0;background:none;padding:0}
+.flip{position:relative;height:340px;transform-style:preserve-3d;transition:transform .5s}
+.flip.open{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;border-radius:16px;padding:18px;display:flex;flex-direction:column;justify-content:space-between;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.front{background:var(--card);border:1px solid var(--line)}
+.back{background:var(--ink);color:#fff;transform:rotateY(180deg)}
+.year{color:var(--gold);font-weight:700;margin:12px 0 0}
+h2{margin:6px 0 0;font-size:26px;line-height:1.15}
+.hint{text-align:center;font-size:12px;color:var(--muted)}
+.note{background:#F59E0B22;border-left:3px solid var(--gold);padding:10px}
+.note b{display:block;color:var(--gold);font-size:10px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
+.acts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.again{background:#dc2626;color:#fff;border-radius:12px}
+.know{background:#059669;color:#fff;border-radius:12px}
+.done{display:none;padding:20px;background:var(--card);border-radius:12px;text-align:center}
+.rail{overflow-x:auto;padding:20px 0}
+.track{display:flex;gap:22px;min-width:max-content;position:relative}
+.track:before{content:"";position:absolute;left:0;right:0;top:36px;height:2px;background:var(--gold)}
+.dot{width:140px;flex:0 0 140px;border:0;background:none;color:inherit;text-align:center;position:relative;z-index:1;padding:0}
+.dot .y{font-size:11px;font-weight:700;color:#d97706;display:block;margin-bottom:8px}
+.dot .p{width:12px;height:12px;border-radius:50%;background:var(--ink);outline:3px solid var(--gold);margin:0 auto;display:block}
+.dot .t{display:block;margin-top:8px;font-weight:700;font-size:14px}
+.search{width:100%;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:inherit;font-size:16px}
+.chips{display:flex;gap:6px;overflow-x:auto;margin:8px 0;padding-bottom:4px}
+.chips button{flex:0 0 auto;border:1px solid var(--line);background:var(--card);color:inherit;border-radius:999px;padding:6px 10px;font-size:12px}
+.chips button.on{background:var(--ink);color:#fff}
+.item{width:100%;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;margin-top:8px;color:inherit}
+.modal,.gate{position:fixed;inset:0;background:#0F172Acc;display:none;align-items:flex-end;justify-content:center;padding:14px;z-index:40}
+.modal.show,.gate.show{display:flex}
+.sheet{width:100%;max-width:480px;background:var(--paper);border-radius:18px;padding:16px;max-height:85vh;overflow:auto}
+.close,.go{width:100%;margin-top:12px;background:var(--ink);color:#fff;border-radius:12px}
+.go{background:var(--gold);color:var(--ink)}
+input.fio{width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:inherit;font-size:16px}
+.iconbtn{background:#ffffff22;color:#fff;border:0;border-radius:8px;padding:6px 8px}
+footer{text-align:center;font-size:11px;color:var(--muted);padding-bottom:24px}
+</style>
+</head>
+<body>
+<header>
+  <div class="row">
+    <div>
+      <p class="sub">DTM · Milliy sertifikat</p>
+      <h1>Tarix-ku</h1>
+    </div>
+    <div>
+      <button class="iconbtn" id="lang">UZ</button>
+      <button class="iconbtn" id="theme">Tun</button>
+      <p class="author">Olimjonov Shohjaxon<br><span id="hello"></span></p>
+    </div>
+  </div>
+  <nav>
+    <button class="on" data-t="cards">Kartalar</button>
+    <button data-t="line">Vaqt o‘qi</button>
+    <button data-t="list">Qidiruv</button>
+  </nav>
+</header>
+<main>
+<section id="cards" class="panel on">
+  <div class="meta"><span id="meta"></span><span id="left"></span></div>
+  <div class="bar"><i id="bar"></i></div>
+  <button class="scene" id="flip" type="button">
+    <div class="flip" id="card">
+      <article class="face front">
+        <div>
+          <small id="cat"></small>
+          <p class="year" id="year"></p>
+          <h2 id="title"></h2>
+        </div>
+        <p class="hint">Kartani bosing</p>
+      </article>
+      <article class="face back">
+        <p id="desc"></p>
+        <div class="note"><b>Imtihon eslatmasi</b><span id="note"></span></div>
+      </article>
+    </div>
+  </button>
+  <div class="acts" id="acts">
+    <button class="again" id="again">Qayta takrorlash</button>
+    <button class="know" id="know">Bildim</button>
+  </div>
+  <div class="done" id="done">Sessiya tugadi.</div>
+</section>
+<section id="line" class="panel">
+  <div class="rail"><div class="track" id="tl"></div></div>
+</section>
+<section id="list" class="panel">
+  <input class="search" id="q" placeholder="1218 yoki O‘troq">
+  <div class="chips" id="chips"></div>
+  <p id="cnt" class="hint"></p>
+  <div id="rows"></div>
+</section>
+</main>
+<div class="gate show" id="gate">
+  <form class="sheet" id="gf">
+    <h2>Ism va familiya</h2>
+    <p class="hint">Progress saqlanadi</p>
+    <input class="fio" id="fio" required placeholder="Ali Valiyev">
+    <button class="go">Boshlash</button>
+  </form>
+</div>
+<div class="modal" id="modal">
+  <div class="sheet">
+    <p class="year" id="my"></p>
+    <h2 id="mt"></h2>
+    <p id="mm" class="hint"></p>
+    <p id="md"></p>
+    <div class="note"><b>Imtihon eslatmasi</b><span id="mn"></span></div>
+    <button class="close" id="mc">Yopish</button>
+  </div>
+</div>
+<footer>© 2026 Olimjonov Shohjaxon · Tarix-ku</footer>
+<script>
+const GOOGLE_SCRIPT_URL="";
+const D=[
+{id:1,year:"1938–39",title_uz:"Teshik-Tosh",title_ru:"Тешик-Таш",desc_uz:"Boysun. Neandertal bola skeleti, echkito‘ra shoxlari. A.P. Okladnikov.",desc_ru:"Байсун. Неандерталец. Окладников.",category:"Madaniyat",examNote_uz:"Dasturda Neandertal deb o‘rgatiladi.",examNote_ru:"В программе — неандерталец."},
+{id:2,year:"mil.av. XXII–XVII asr",title_uz:"Sopollitepa",title_ru:"Сапаллитепа",desc_uz:"Sherobod. Ilk shahar-tipi. Jarqo‘ton bilan juft.",desc_ru:"Шерабад. Ранний город. Пара с Джаркутаном.",category:"Madaniyat",examNote_uz:"BMAC / Oks sivilizatsiyasi.",examNote_ru:"BMAC / Оксская цивилизация."},
+{id:3,year:"mil.av. 550–330",title_uz:"Ahamoniylar",title_ru:"Ахемениды",desc_uz:"Kir II. Baqtriya, So‘g‘d, Xorazm, Farg‘ona satraplik.",desc_ru:"Кир II. Сатрапии Средней Азии.",category:"Islohot",examNote_uz:"Doro I: ~20 satraplik. Behistun — Frada.",examNote_ru:"Дарий I: около 20 сатрапий. Бехистун — Фрада."},
+{id:4,year:"mil.av. 329–327",title_uz:"Iskandar va Spitamen",title_ru:"Александр и Спитамен",desc_uz:"Amudaryodan o‘tish. Ikki yillik partizan urushi.",desc_ru:"Переход через Амударью. Партизанская война.",category:"Urush",examNote_uz:"Iskandariya Eshata — Xo‘jand. Marokanda = Samarqand.",examNote_ru:"Александрия Эсхата — Ходжент. Мараканда = Самарканд."},
+{id:5,year:"II asr",title_uz:"Kanishka I",title_ru:"Канишка I",desc_uz:"Kushon cho‘qqisi. Fayoztepa, Qoratepa, Termiz.",desc_ru:"Пик Кушан. Фаязтепа, Каратепа, Термез.",category:"Hukmdor",examNote_uz:"Odatda 127-yildan.",examNote_ru:"Обычно с 127 г."},
+{id:6,year:"705–715",title_uz:"Qutayba ibn Muslim",title_ru:"Кутейба ибн Муслим",desc_uz:"Buxoro 709, Samarqand 712, Xorazm 712.",desc_ru:"Бухара 709, Самарканд 712, Хорезм 712.",category:"Urush",examNote_uz:"715-da Farg‘ona yo‘lida o‘ldirilgan.",examNote_ru:"Убит в 715 на пути в Фергану."},
+{id:7,year:"751",title_uz:"Talos jangi",title_ru:"Битва на Таласе",desc_uz:"Abbosiy–qarluq ittifoqi Tan Xitoyini yenggan. Qog‘oz g‘arbga o‘tgan.",desc_ru:"Аббасиды и карлуки победили Тан.",category:"Urush",examNote_uz:"Ziyod ibn Solih — Gao Syanchji.",examNote_ru:"Зияд ибн Салих против Гао Сяньчжи."},
+{id:8,year:"892–907",title_uz:"Ismoil Somoniy",title_ru:"Исмаил Самани",desc_uz:"Poytaxt Buxoro. 900-da Amr ibn Laysni yenggan.",desc_ru:"Столица Бухара. Победа над Амром ибн Лейсом в 900.",category:"Hukmdor",examNote_uz:"875 Nasr I; 999 Qoraxoniylar Buxoroni olgan.",examNote_ru:"875 Наср I; 999 караханиды взяли Бухару."},
+{id:9,year:"999",title_uz:"Qoraxoniylar Buxoroni olgan",title_ru:"Караханиды взяли Бухару",desc_uz:"Ilikxon Nosir ibn Ali. Somoniylar yiqilgan.",desc_ru:"Наср ибн Али сверг Саманидов.",category:"Urush",examNote_uz:"Satuk Bug‘roxon ~940-lar islom qabul qilgan.",examNote_ru:"Сатук Богра-хан принял ислам около 940-х."},
+{id:10,year:"1040",title_uz:"Dandanakan",title_ru:"Данданакан",desc_uz:"Saljuqiylar Mas’ud G‘aznaviyni yenggan. Xuroson Saljuqiy.",desc_ru:"Сельджуки отняли Хорасан у Газневидов.",category:"Urush",examNote_uz:"Shu yili Qoraxoniylar sharq–g‘arbga bo‘lingan.",examNote_ru:"В тот же год раскол караханидов."},
+{id:11,year:"1141",title_uz:"Qatvon jangi",title_ru:"Катван",desc_uz:"Yeluy Dashi Sanjar + Qoraxoniyni yenggan.",desc_ru:"Елюй Даши победил Санджара.",category:"Urush",examNote_uz:"Musulmon sulton buddist g‘urxondan yengilgan.",examNote_ru:"Мусульманский султан проиграл гурхану."},
+{id:12,year:"1218",title_uz:"O‘troq voqeasi",title_ru:"Отрар",desc_uz:"Inolchiq mo‘g‘ul karvonini qirg‘in qilgan.",desc_ru:"Иналчик истребил монгольский караван.",category:"Urush",examNote_uz:"Urush bahonasi. 1219 O‘troq qamali.",examNote_ru:"Повод к войне. Осада 1219."},
+{id:13,year:"1221",title_uz:"Jaloliddin Manguberdi",title_ru:"Джалал ад-Дин",desc_uz:"Parvon g‘alabasi; Sind daryosi. 1231-da o‘lgan.",desc_ru:"Парван; Инд. Погиб в 1231.",category:"Hukmdor",examNote_uz:"1999-yildan alohida e’tirof.",examNote_ru:"С 1999 особо чтится в Узбекистане."},
+{id:14,year:"1370",title_uz:"Amir Temur — Balx",title_ru:"Амир Темур — Балх",desc_uz:"Qurultoy. 1402 Ankara — Boyazid asir. 1405 O‘trar — vafot.",desc_ru:"Курултай. 1402 Анкара. 1405 Отрар.",category:"Hukmdor",examNote_uz:"1336 Keshda tug‘ilgan. Unvon: amir, Ko‘ragon.",examNote_ru:"Родился в 1336 в Кеше. Титул амира."},
+{id:15,year:"1417–20",title_uz:"Ulug‘bek madrasasi",title_ru:"Медресе Улугбека",desc_uz:"Registon ibtidosi. Zij — 1018 yulduz. 1449-da qatl.",desc_ru:"Начало Регистана. Зидж. Убит в 1449.",category:"Madaniyat",examNote_uz:"Samarqand rasadxonasi 1420-lar.",examNote_ru:"Обсерватория 1420-х."},
+{id:16,year:"1500/01",title_uz:"Shayboniyxon Samarqand",title_ru:"Шейбани-хан",desc_uz:"Boburga qarshi. 1510 Marvda Ismoil Safaviy qo‘lida o‘lgan.",desc_ru:"Против Бабура. Погиб при Мерве в 1510.",category:"Urush",examNote_uz:"1526 Bobur Panipat — Hindiston.",examNote_ru:"1526 Бабур — Панипат."},
+{id:17,year:"1865",title_uz:"Toshkent olinishi",title_ru:"Взятие Ташкента",desc_uz:"Chernyayev. 1867 general-gubernatorlik, Kaufman.",desc_ru:"Черняев. 1867 генерал-губернаторство.",category:"Urush",examNote_uz:"1868 Zirabuloq; 1873 Xiva; 1876 Qo‘qon tugatilgan.",examNote_ru:"1868 Зерабулак; 1873 Хива; 1876 Коканд."},
+{id:18,year:"1916",title_uz:"Chaqiruv qo‘zg‘oloni",title_ru:"Восстание 1916",desc_uz:"25-iyun farmoni. Jizzax o‘chog‘i. Urkun.",desc_ru:"Указ о призыве. Джизак. Уркун.",category:"Urush",examNote_uz:"Front orqasi ishlariga chaqiruv.",examNote_ru:"Мобилизация на тыловые работы."},
+{id:19,year:"1917.27.11",title_uz:"Qo‘qon muxtoriyati",title_ru:"Кокандская автономия",desc_uz:"Tinishboyev, keyin Cho‘qay. 1918.22.02 qulagan.",desc_ru:"Тынышпаев, затем Чокай. Пала 22.02.1918.",category:"Islohot",examNote_uz:"Qizil gvardiya Qo‘qonni ishg‘ol qilgan.",examNote_ru:"Красные заняли Коканд."},
+{id:20,year:"1924.27.10",title_uz:"O‘zbekiston SSR",title_ru:"Узбекская ССР",desc_uz:"Poytaxt 1924 Samarqand, 1930 Toshkent.",desc_ru:"Столица с 1924 Самарканд, с 1930 Ташкент.",category:"Islohot",examNote_uz:"1991.31.08 mustaqillik; 1992.08.12 Konstitutsiya.",examNote_ru:"31.08.1991 независимость; 08.12.1992 Конституция."},
+{id:21,year:"1991.31.08",title_uz:"Mustaqillik",title_ru:"Независимость",desc_uz:"Oliy Kengash. 1-sentabr — Mustaqillik kuni. BMT 1992.02.03.",desc_ru:"Верховный Совет. День независимости — 1 сентября.",category:"Islohot",examNote_uz:"Karimov 1991–2016; Mirziyoyev 2016-dan.",examNote_ru:"Каримов 1991–2016; Мирзиёев с 2016."},
+{id:22,year:"490–479 mil.av.",title_uz:"Yunon-fors urushlari",title_ru:"Греко-персидские войны",desc_uz:"Marafon 490, Salamin 480, Plateya 479.",desc_ru:"Марафон, Саламин, Платеи.",category:"Urush",examNote_uz:"Gavgamela 331 — Ahamoniylar oxiri.",examNote_ru:"Гавгамелы 331 — конец Ахеменидов."},
+{id:23,year:"476",title_uz:"G‘arbiy Rim qulashi",title_ru:"Падение Западного Рима",desc_uz:"Odoakr Romul Avgustulni tushirgan.",desc_ru:"Одоакр сверг Ромула Августула.",category:"Urush",examNote_uz:"1453 Konstantinopol — o‘rta asr chegarasi.",examNote_ru:"1453 Константинополь — граница Средневековья."},
+{id:24,year:"1453",title_uz:"Konstantinopol usmoniy",title_ru:"Падение Константинополя",desc_uz:"Mehmed II Fotih. Vizantiya tugagan.",desc_ru:"Мехмед II Фатих. Конец Византии.",category:"Urush",examNote_uz:"800 Buyuk Karl; 1096 1-salib; 1206 Chingiz.",examNote_ru:"800 Карл Великий; 1096 1-й крестовый; 1206 Чингис."},
+{id:25,year:"1492",title_uz:"Kolumb; Granada",title_ru:"Колумб; Гранада",desc_uz:"Yangi Dunyo. Rekonkista yakuni.",desc_ru:"Новый Свет. Конец Реконкисты.",category:"Madaniyat",examNote_uz:"1498 da Gama; 1519–22 Magellan–Elkano.",examNote_ru:"1498 да Гама; 1519–22 Магеллан."},
+{id:26,year:"1517",title_uz:"Lyuter — 95 tezis",title_ru:"Лютер — 95 тезисов",desc_uz:"Vittenberg. Protestantizm.",desc_ru:"Виттенберг. Протестантизм.",category:"Islohot",examNote_uz:"1648 Vestfal; 1688 Shonli inqilob.",examNote_ru:"1648 Вестфалия; 1688 Славная революция."},
+{id:27,year:"1789.14.07",title_uz:"Bastiliya",title_ru:"Бастилия",desc_uz:"Fransuz inqilobi. 1799 Napoleon konsul. 1815 Vaterloo.",desc_ru:"Революция. 1799 Наполеон. 1815 Ватерлоо.",category:"Islohot",examNote_uz:"1776 AQSH deklaratsiyasi.",examNote_ru:"1776 Декларация США."},
+{id:28,year:"1914.28.06",title_uz:"Sarayevo",title_ru:"Сараево",desc_uz:"Frans Ferdinand. 1918.11.11 Kompyen.",desc_ru:"Франц Фердинанд. Компьен 11.11.1918.",category:"Urush",examNote_uz:"1917 Oktyabr; 1919 Versal; 1922 SSSR.",examNote_ru:"1917 Октябрь; 1919 Версаль; 1922 СССР."},
+{id:29,year:"1939.09.01",title_uz:"2-jahon urushi boshlanishi",title_ru:"Начало Второй мировой",desc_uz:"Polsha. 1941.22.06 Barbarossa. 1943.02.02 Stalingrad. 1944.06.06 Normandiya.",desc_ru:"Польша. Барбаросса. Сталинград. Нормандия.",category:"Urush",examNote_uz:"1945.08–09 yadro; 1945.24.10 BMT.",examNote_ru:"Ядерное оружие 1945; ООН 24.10.1945."},
+{id:30,year:"1991.26.12",title_uz:"SSSR parchalanishi",title_ru:"Распад СССР",desc_uz:"1989 Berlin devori. 1962 Karib. 1949 NATO / XXR.",desc_ru:"Стена 1989. Карибский кризис 1962. НАТО/КНР 1949.",category:"Islohot",examNote_uz:"2001.09.11; 2022 Ukraina urushi.",examNote_ru:"11.09.2001; война в Украине с 2022."}
+];
+const $ = id => document.getElementById(id);
+let lang = localStorage.getItem("tk_lang")||"uz";
+let dark = localStorage.getItem("tk_dark")==="1";
+let cat="", queue=D.map((_,i)=>i), known=+localStorage.getItem("tk_known")||0, seen=+localStorage.getItem("tk_seen")||0;
+const t = i => lang==="ru"?i.title_ru:i.title_uz;
+const d = i => lang==="ru"?i.desc_ru:i.desc_uz;
+const n = i => lang==="ru"?i.examNote_ru:i.examNote_uz;
+function theme(){ document.documentElement.classList.toggle("dark", dark); $("theme").textContent = dark?"Kun":"Tun"; }
+function paint(){
+  const it=D[queue[0]];
+  $("meta").textContent=(lang==="ru"?"знаю ":"bildim ")+known+" / "+D.length;
+  $("left").textContent=(lang==="ru"?"осталось ":"qolgan ")+queue.length;
+  $("bar").style.width=Math.round(known/D.length*100)+"%";
+  if(!it){ $("flip").style.display="none"; $("acts").style.display="none"; $("done").style.display="block"; send(); return; }
+  $("cat").textContent=it.category; $("year").textContent=it.year; $("title").textContent=t(it); $("desc").textContent=d(it); $("note").textContent=n(it);
+  $("card").classList.remove("open");
+}
+$("flip").onclick=()=>$("card").classList.toggle("open");
+$("again").onclick=()=>{ seen++; if(queue.length>1) queue.push(queue.shift()); localStorage.setItem("tk_seen",seen); paint(); };
+$("know").onclick=()=>{ seen++; known++; queue.shift(); localStorage.setItem("tk_known",known); localStorage.setItem("tk_seen",seen); paint(); };
+function openM(it){ $("my").textContent=it.year; $("mt").textContent=t(it); $("mm").textContent=it.category; $("md").textContent=d(it); $("mn").textContent=n(it); $("modal").classList.add("show"); }
+$("mc").onclick=()=>$("modal").classList.remove("show");
+$("modal").onclick=e=>{ if(e.target.id==="modal") $("mc").onclick(); };
+function line(){
+  $("tl").innerHTML=D.map(i=>`<button class="dot" data-id="${i.id}"><span class="y">${i.year}</span><span class="p"></span><span class="t">${t(i)}</span></button>`).join("");
+}
+$("tl").onclick=e=>{ const b=e.target.closest(".dot"); if(b) openM(D.find(x=>x.id==+b.dataset.id)); };
+function norm(s){ return (s||"").toLowerCase().replace(/[ʻ’`']/g,"'"); }
+function list(){
+  const q=norm($("q").value);
+  const rows=D.filter(i=> (!cat||i.category===cat) && norm([i.year,i.title_uz,i.title_ru,i.desc_uz,i.desc_ru,i.examNote_uz,i.examNote_ru].join(" ")).includes(q));
+  $("cnt").textContent=rows.length+(lang==="ru"?" записей":" ta yozuv");
+  $("rows").innerHTML=rows.map(i=>`<button class="item" data-id="${i.id}"><b>${i.year}</b> · ${i.category}<br>${t(i)}</button>`).join("");
+}
+$("rows").onclick=e=>{ const b=e.target.closest(".item"); if(b) openM(D.find(x=>x.id==+b.dataset.id)); };
+$("q").oninput=list;
+$("chips").innerHTML=["","Hukmdor","Urush","Madaniyat","Islohot"].map(c=>`<button data-c="${c}" class="${c===""?"on":""}">${c||"Hammasi"}</button>`).join("");
+$("chips").onclick=e=>{ const b=e.target.closest("button"); if(!b) return; cat=b.dataset.c; [...$("chips").children].forEach(x=>x.classList.toggle("on",x===b)); list(); };
+document.querySelector("nav").onclick=e=>{ const b=e.target.closest("button"); if(!b) return; [...document.querySelectorAll("nav button")].forEach(x=>x.classList.toggle("on",x===b)); document.querySelectorAll(".panel").forEach(p=>p.classList.toggle("on",p.id===b.dataset.t)); };
+$("lang").onclick=()=>{ lang=lang==="uz"?"ru":"uz"; localStorage.setItem("tk_lang",lang); $("lang").textContent=lang.toUpperCase(); paint(); line(); list(); };
+$("theme").onclick=()=>{ dark=!dark; localStorage.setItem("tk_dark",dark?"1":"0"); theme(); };
+function send(){ if(!GOOGLE_SCRIPT_URL) return; fetch(GOOGLE_SCRIPT_URL,{method:"POST",mode:"no-cors",body:JSON.stringify({name:localStorage.getItem("tk_fio"),known,seen,total:D.length,percent:Math.round(known/D.length*100),at:new Date().toISOString()})}); }
+const fio=localStorage.getItem("tk_fio");
+if(fio){ $("gate").classList.remove("show"); $("hello").textContent=fio; }
+$("gf").onsubmit=e=>{ e.preventDefault(); const v=$("fio").value.trim(); if(!v) return; localStorage.setItem("tk_fio",v); $("hello").textContent=v; $("gate").classList.remove("show"); };
+$("lang").textContent=lang.toUpperCase();
+theme(); paint(); line(); list();
+</script>
+</body>
+</html>
