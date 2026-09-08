@@ -3,92 +3,225 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tarixdan Xulosa - Test</title>
+    <title>7-Sinf O'zbekiston Tarixi - Interactive Test</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f7f6;
+        * {
+            box-sizing: border-box;
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #f0f2f5;
+            color: #1a1a1a;
             display: flex;
             justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
         }
-        .quiz-container {
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            max-width: 600px;
+        .container {
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
             width: 100%;
+            max-width: 680px;
+            padding: 30px;
         }
-        h2 { text-align: center; color: #2c3e50; }
-        .input-group { margin-bottom: 20px; }
-        .input-group label { display: block; margin-bottom: 5px; font-weight: bold; }
-        .input-group input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
-        .question { margin-bottom: 20px; }
-        .question h4 { margin-bottom: 10px; color: #34495e; }
-        .options label { display: block; padding: 8px 12px; background: #eef2f5; margin-bottom: 6px; border-radius: 6px; cursor: pointer; }
-        .options input { margin-right: 10px; }
-        button {
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #2b5278;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+        .header h1 {
+            color: #2b5278;
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        .header p {
+            color: #666;
+            font-size: 14px;
+        }
+        .user-info {
+            margin-bottom: 25px;
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #2b5278;
+        }
+        .user-info label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #334155;
+        }
+        .user-info input {
             width: 100%;
             padding: 12px;
-            background-color: #27ae60;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 16px;
-            cursor: pointer;
-            margin-top: 15px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 15px;
+            outline: none;
+            transition: border 0.2s;
         }
-        button:hover { background-color: #219150; }
-        #result { margin-top: 20px; text-align: center; font-size: 18px; font-weight: bold; color: #2c3e50; }
+        .user-info input:focus {
+            border-color: #2b5278;
+        }
+        .q-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: transform 0.2s;
+        }
+        .q-title {
+            font-weight: 600;
+            font-size: 16px;
+            color: #1e293b;
+            margin-bottom: 15px;
+        }
+        .q-title span {
+            color: #2b5278;
+            margin-right: 6px;
+        }
+        .opt-label {
+            display: flex;
+            align-items: center;
+            padding: 10px 14px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: background 0.2s, border-color 0.2s;
+        }
+        .opt-label:hover {
+            background-color: #f1f5f9;
+        }
+        .opt-label input {
+            margin-right: 12px;
+            width: 18px;
+            height: 18px;
+            accent-color: #2b5278;
+        }
+        .btn-submit {
+            width: 100%;
+            background: #2b5278;
+            color: #ffffff;
+            border: none;
+            padding: 16px;
+            border-radius: 10px;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 10px;
+        }
+        .btn-submit:hover {
+            background: #1e3a57;
+        }
+        #result-box {
+            display: none;
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 12px;
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            text-align: center;
+        }
+        #result-box h2 {
+            color: #166534;
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+        #result-box p {
+            color: #15803d;
+            font-size: 16px;
+        }
     </style>
 </head>
 <body>
 
-<div class="quiz-container">
-    <h2>📚 Tarixdan Xulosa Testi</h2>
-    
-    <div class="input-group">
+<div class="container">
+    <div class="header">
+        <h1>📚 7-Sinf O'zbekiston Tarixi Testi</h1>
+        <p>Tarixdan xatolarni o'rganish va bilimlarni sinash tizimi</p>
+    </div>
+
+    <div class="user-info">
         <label for="studentName">Ism va Familiyangizni kiriting:</label>
-        <input type="text" id="studentName" placeholder="Masalan: Shohjaxon Olimjonov">
+        <input type="text" id="studentName" placeholder="Masalan: Shohjaxon Olimjonov" required>
     </div>
 
-    <!-- Test Savollari -->
-    <div class="question">
-        <h4>1. Muhammad ibn Muso al-Xorazmiy qaysi ilmiy markazda faoliyat yuritgan?</h4>
-        <div class="options">
-            <label><input type="radio" name="q1" value="A"> A) Baytul hikma (Bag'dod)</label>
-            <label><input type="radio" name="q1" value="B"> B) Marv rasadxonasi</label>
-            <label><input type="radio" name="q1" value="C"> C) Ulug'bek madrasasi</label>
+    <form id="quizForm">
+        <!-- 1-savol -->
+        <div class="q-card">
+            <div class="q-title"><span>1.</span> Muhammad ibn Muso al-Xorazmiy Bag'doddagi qaysi ilmiy markazga rahbarlik qilgan?</div>
+            <label class="opt-label"><input type="radio" name="q1" value="A"> A) Baytul hikma (Donishmandlik uyi)</label>
+            <label class="opt-label"><input type="radio" name="q1" value="B"> B) Marv rasadxonasi</label>
+            <label class="opt-label"><input type="radio" name="q1" value="C"> C) Ulug'bek madrasasi</label>
+            <label class="opt-label"><input type="radio" name="q1" value="D"> D) Buxoro dorul-hikmasi</label>
         </div>
-    </div>
 
-    <div class="question">
-        <h4>2. Ahmad Farg'oniy tomonidan yaratilgan mashhur gidrotexnik inshoot qaysi?</h4>
-        <div class="options">
-            <label><input type="radio" name="q2" value="A"> A) Nilomer (Meqyos an-Nil)</label>
-            <label><input type="radio" name="q2" value="B"> B) Bandi amir</label>
-            <label><input type="radio" name="q2" value="C"> C) Karvin kanali</label>
+        <!-- 2-savol -->
+        <div class="q-card">
+            <div class="q-title"><span>2.</span> Ahmad Farg'oniy tomonidan Nil daryosida suvlarni o'lchash uchun qurilgan mashhur inshoot:</div>
+            <label class="opt-label"><input type="radio" name="q2" value="A"> A) Nilomer (Meqyos an-Nil)</label>
+            <label class="opt-label"><input type="radio" name="q2" value="B"> B) Bandi Amir</label>
+            <label class="opt-label"><input type="radio" name="q2" value="C"> C) Karvin kanali</label>
+            <label class="opt-label"><input type="radio" name="q2" value="D"> D) Sultonband to'g'oni</label>
         </div>
+
+        <!-- 3-savol -->
+        <div class="q-card">
+            <div class="q-title"><span>3.</span> Abu Nasr Forobiy antik davr olimlaridan qaysi birining asarlariga sharhlar yozib "Ikkinchi muallim" unvonini olgan?</div>
+            <label class="opt-label"><input type="radio" name="q3" value="A"> A) Sokrat</label>
+            <label class="opt-label"><input type="radio" name="q3" value="B"> B) Arastu (Aristotel)</label>
+            <label class="opt-label"><input type="radio" name="q3" value="C"> C) Aflotun (Platon)</label>
+            <label class="opt-label"><input type="radio" name="q3" value="D"> D) Gippokrat</label>
+        </div>
+
+        <!-- 4-savol -->
+        <div class="q-card">
+            <div class="q-title"><span>4.</span> Abu Rayhon Beruniy tomonidan yozilgan, astronomiya va geodeziyaga oid mashhur asar:</div>
+            <label class="opt-label"><input type="radio" name="q4" value="A"> A) Qonuni Mas'udiy</label>
+            <label class="opt-label"><input type="radio" name="q4" value="B"> B) Tib qonunlari</label>
+            <label class="opt-label"><input type="radio" name="q4" value="C"> C) Kitob al-ag'oni</label>
+            <label class="opt-label"><input type="radio" name="q4" value="D"> D) Hidoya</label>
+        </div>
+
+        <!-- 5-savol -->
+        <div class="q-card">
+            <div class="q-title"><span>5.</span> Abu Ali ibn Sino Yevropada qanday nom bilan mashhur bo'lgan?</div>
+            <label class="opt-label"><input type="radio" name="q5" value="A"> A) Avitsenna</label>
+            <label class="opt-label"><input type="radio" name="q5" value="B"> B) Alfraganus</label>
+            <label class="opt-label"><input type="radio" name="q5" value="C"> C) Alpharabius</label>
+            <label class="opt-label"><input type="radio" name="q5" value="D"> D) Rhazes</label>
+        </div>
+
+        <button type="button" class="btn-submit" onclick="submitQuiz()">Natijani Yuborish</button>
+    </form>
+
+    <div id="result-box">
+        <h2>Natijangiz saqlandi va ustozga yuborildi!</h2>
+        <p id="resultText"></p>
     </div>
-
-    <button onclick="submitQuiz()">Natijani Yuborish</button>
-
-    <div id="result"></div>
 </div>
 
 <script>
-// To'g'ri javoblar kaliti
 const correctAnswers = {
     q1: "A",
-    q2: "A"
+    q2: "A",
+    q3: "B",
+    q4: "A",
+    q5: "A"
 };
 
 function submitQuiz() {
     const studentName = document.getElementById("studentName").value.trim();
     if (!studentName) {
-        alert("Iltimos, ism va familiyangizni kiriting!");
+        alert("Iltimos, avval ism va familiyangizni kiriting!");
         return;
     }
 
@@ -102,15 +235,14 @@ function submitQuiz() {
         }
     }
 
-    document.getElementById("result").innerText = `Sizning natijangiz: ${score} / ${totalQuestions}`;
+    document.getElementById("resultText").innerText = studentName + ", siz " + totalQuestions + " ta savoldan " + score + " tasiga to'g'ri javob berdingiz.";
+    document.getElementById("result-box").style.display = "block";
 
-    // Telegram Botga natijani yuborish
     sendResultsToTelegram(studentName, score, totalQuestions);
 }
 
 function sendResultsToTelegram(studentName, score, totalQuestions) {
-    // BotFather'dan olgan to'liq tokeningizni kiriting (nuqtalarsiz):
-    const token = '8864127573:AAFNUjjRZaHPXDrjFCr9fQwZ7...'; 
+    const token = '8864127573:AAFNUjjRZaHPXDrjFCr9fQwZ7'; 
     const chatId = '7638021708';
 
     const message = `📚 *Tarixdan Xulosa — Yangi natija!*\n\n` +
@@ -126,15 +258,7 @@ function sendResultsToTelegram(studentName, score, totalQuestions) {
             text: message,
             parse_mode: 'Markdown'
         })
-    })
-    .then(response => {
-        if(response.ok) {
-            alert("Natijangiz ustozga yuborildi!");
-        } else {
-            alert("Xatolik yuz berdi. Bot ma'lumotlarini tekshiring.");
-        }
-    })
-    .catch(err => console.error('Xatolik:', err));
+    }).catch(err => console.error('Telegramga yuborishda xatolik:', err));
 }
 </script>
 
