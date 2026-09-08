@@ -3,430 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>7-Sinf O'zbekiston Tarixi | Yakuniy Test</title>
+    <title>Tarixdan Xulosa - Test</title>
     <style>
-        :root {
-            --primary: #2c3e50;
-            --accent: #2980b9;
-            --success: #27ae60;
-            --danger: #c0392b;
-            --light: #ecf0f1;
-        }
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: Arial, sans-serif;
             background-color: #f4f7f6;
             margin: 0;
             padding: 20px;
-            color: #333;
+            display: flex;
+            justify-content: center;
         }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
+        .quiz-container {
             background: white;
-            padding: 30px;
+            padding: 25px;
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-        h1, h2 {
-            text-align: center;
-            color: var(--primary);
-        }
-        .form-group {
-            margin-bottom: 20px;
-        }
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-        }
-        input[type="text"] {
+            max-width: 600px;
             width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            box-sizing: border-box;
         }
-        .btn {
-            display: block;
+        h2 { text-align: center; color: #2c3e50; }
+        .input-group { margin-bottom: 20px; }
+        .input-group label { display: block; margin-bottom: 5px; font-weight: bold; }
+        .input-group input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
+        .question { margin-bottom: 20px; }
+        .question h4 { margin-bottom: 10px; color: #34495e; }
+        .options label { display: block; padding: 8px 12px; background: #eef2f5; margin-bottom: 6px; border-radius: 6px; cursor: pointer; }
+        .options input { margin-right: 10px; }
+        button {
             width: 100%;
             padding: 12px;
-            background: var(--accent);
+            background-color: #27ae60;
             color: white;
             border: none;
             border-radius: 6px;
             font-size: 16px;
             cursor: pointer;
-            transition: 0.3s;
+            margin-top: 15px;
         }
-        .btn:hover {
-            background: #1f6391;
-        }
-        .question-card {
-            margin-bottom: 25px;
-            padding: 15px;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            background: #fafafa;
-        }
-        .topic-badge {
-            font-size: 12px;
-            background: #e1f5fe;
-            color: #0288d1;
-            padding: 4px 8px;
-            border-radius: 4px;
-            display: inline-block;
-            margin-bottom: 8px;
-        }
-        .options-label {
-            display: block;
-            padding: 8px 12px;
-            margin: 5px 0;
-            background: white;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .options-label:hover {
-            background: #f0f0f0;
-        }
-        .hidden {
-            display: none;
-        }
-        .result-box {
-            text-align: center;
-            padding: 20px;
-            background: #e8f8f5;
-            border-radius: 8px;
-            border: 1px solid #a3e4d7;
-            margin-bottom: 20px;
-        }
-        .topic-list {
-            text-align: left;
-            background: #fdf2e9;
-            padding: 15px 25px;
-            border-radius: 8px;
-            border: 1px solid #fadbd8;
-        }
-        .topic-list li {
-            margin-bottom: 5px;
-            color: var(--danger);
-            font-weight: 500;
-        }
+        button:hover { background-color: #219150; }
+        #result { margin-top: 20px; text-align: center; font-size: 18px; font-weight: bold; color: #2c3e50; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <!-- START PAGE -->
-    <div id="start-page">
-        <h1>7-Sinf O'zbekiston Tarixi</h1>
-        <p style="text-align: center; color: #666;">IV asrdan – XIII asr boshlarigacha (150 ta savol)</p>
-        <hr><br>
-        <div class="form-group">
-            <label for="fullname">F.I.Sh. (Ism va Familiyangiz):</label>
-            <input type="text" id="fullname" placeholder="Masalan: Aliyev Vali" required>
-        </div>
-        <div class="form-group">
-            <label for="classname">Sinfingiz:</label>
-            <input type="text" id="classname" placeholder="Masalan: 7-A" required>
-        </div>
-        <button class="btn" onclick="startQuiz()">Testni boshlash</button>
+<div class="quiz-container">
+    <h2>📚 Tarixdan Xulosa Testi</h2>
+    
+    <div class="input-group">
+        <label for="studentName">Ism va Familiyangizni kiriting:</label>
+        <input type="text" id="studentName" placeholder="Masalan: Shohjaxon Olimjonov">
     </div>
 
-    <!-- QUIZ PAGE -->
-    <div id="quiz-page" class="hidden">
-        <h2 id="quiz-title">Test Variantlari</h2>
-        <form id="quiz-form">
-            <div id="questions-container"></div>
-            <br>
-            <button type="button" class="btn" onclick="submitQuiz()">Testni Yakunlash va Natijani Ko'rish</button>
-        </form>
+    <!-- Test Savollari -->
+    <div class="question">
+        <h4>1. Muhammad ibn Muso al-Xorazmiy qaysi ilmiy markazda faoliyat yuritgan?</h4>
+        <div class="options">
+            <label><input type="radio" name="q1" value="A"> A) Baytul hikma (Bag'dod)</label>
+            <label><input type="radio" name="q1" value="B"> B) Marv rasadxonasi</label>
+            <label><input type="radio" name="q1" value="C"> C) Ulug'bek madrasasi</label>
+        </div>
     </div>
 
-    <!-- RESULT PAGE -->
-    <div id="result-page" class="hidden">
-        <h2>Test Natijasi</h2>
-        <div class="result-box">
-            <h3 id="res-name"></h3>
-            <p id="res-score" style="font-size: 20px; font-weight: bold; color: var(--success);"></p>
-            <p id="res-percent"></p>
+    <div class="question">
+        <h4>2. Ahmad Farg'oniy tomonidan yaratilgan mashhur gidrotexnik inshoot qaysi?</h4>
+        <div class="options">
+            <label><input type="radio" name="q2" value="A"> A) Nilomer (Meqyos an-Nil)</label>
+            <label><input type="radio" name="q2" value="B"> B) Bandi amir</label>
+            <label><input type="radio" name="q2" value="C"> C) Karvin kanali</label>
         </div>
-
-        <div id="topics-to-study" class="topic-list hidden">
-            <h3>⚠️ Qayta o'qishingiz kerak bo'lgan mavzular:</h3>
-            <ul id="wrong-topics-list"></ul>
-        </div>
-        <br>
-        <button class="btn" onclick="window.print()">Natijani Saqlash / Chop etish (PDF)</button>
     </div>
+
+    <button onclick="submitQuiz()">Natijani Yuborish</button>
+
+    <div id="result"></div>
 </div>
 
 <script>
-// Test ma'lumotlari manbadan olindi[span_0](start_span)[span_0](end_span)
-const quizData = [
-  { id: 1, topic: "1-mavzu. Ajdodlarimizning ma'naviy qadriyatlari", q: "«O'rta asrlar» tushunchasi tarix faniga kim tomonidan olib kirilgan?", options: ["Rus tarixchilari", "Arab geograflari", "Italyan tarixchilari", "Xitoy sayyohlari"], ans: "C" },
-  { id: 2, topic: "1-mavzu. Ajdodlarimizning ma'naviy qadriyatlari", q: "Darslik qaysi davr tarixini o'z ichiga oladi?", options: ["IV asrdan XIII asr boshlarigacha", "VII asrdan XV asrgacha", "I asrdan X asrgacha", "IX asrdan XIX asrgacha"], ans: "A" },
-  { id: 3, topic: "1-mavzu. Ajdodlarimizning ma'naviy qadriyatlari", q: "Qadimgi Turon hududida qaysi xalqlarning ajdodlari yashab kelishgan?", options: ["Faqat o'zbeklar", "O'zbek, tojik, qirg'iz, qozoq, qoraqalpoq va turkmanlar", "Faqat forslar", "Faqat arablar"], ans: "B" },
-  { id: 4, topic: "1-mavzu. Ajdodlarimizning ma'naviy qadriyatlari", q: "IX–XII asrlarda yetishib chiqqan buyuk ulamolardan biri kim emas?", options: ["Imom Buxoriy", "Ahmad Yassaviy", "Najmiddin Kubro", "Chingizxon"], ans: "D" },
-  { id: 5, topic: "1-mavzu. Ajdodlarimizning ma'naviy qadriyatlari", q: "Mamlakatimiz hududida jahon ilm-faniga hissa qo'shgan mutafakkirlardan biri sifatida kim ko'rsatilgan?", options: ["Abu Rayhon Beruniy", "Konfutsiy", "Aflotun", "Gerodot"], ans: "A" },
+// To'g'ri javoblar kaliti
+const correctAnswers = {
+    q1: "A",
+    q2: "A"
+};
 
-  { id: 6, topic: "2-mavzu. IV–VII asrlarda xalqlarning turmush tarzi", q: "Ilk o'rta asrlarda katta yer egalari qanday atalgan?", options: ["Kadivar", "Dehqon", "Chokar", "Kashovarz"], ans: "B" },
-  { id: 7, topic: "2-mavzu. IV–VII asrlarda xalqlarning turmush tarzi", q: "Dehqon yerlarida ishlovchi qaram dehqonchi qanday atalgan?", options: ["Kadivar", "Chokar", "Dehqon", "Ixshid"], ans: "A" },
-  { id: 8, topic: "2-mavzu. IV–VII asrlarda xalqlarning turmush tarzi", q: "Dehqon mulkini qo'riqlovchi harbiy xizmatchi qanday nomlangan?", options: ["Kashovarz", "Chokar", "Kadivar", "Tudun"], ans: "B" },
-  { id: 9, topic: "2-mavzu. IV–VII asrlarda xalqlarning turmush tarzi", q: "VIII asr boshlarida mamlakatimiz hududida qaysi din ta'siri kuchaya boshladi?", options: ["Buddaviylik", "Islom dini", "Xristianlik", "Moniylik"], ans: "B" },
-  { id: 10, topic: "2-mavzu. IV–VII asrlarda xalqlarning turmush tarzi", q: "«Turon», «Turkiston», «Movarounnahr» nomlarini ilmiy muomalaga kim kiritgan?", options: ["Faqat mahalliy xalqlar", "Arab geograflari va keyinchalik Yevropa olim-sayyohlari", "Faqat rus olimlari", "Yunon faylasuflari"], ans: "B" },
-
-  { id: 11, topic: "3–4-mavzular. IV–VII asrlarda Xorazm", q: "Amudaryo qayerdan boshlanadi?", options: ["Pomir tog'laridan", "Hindiqushning shimoliy yonbag'irlaridan", "Tyanshan tog'laridan", "Ural tog'laridan"], ans: "B" },
-  { id: 12, topic: "3–4-mavzular. IV–VII asrlarda Xorazm", q: "Xorazmda hukmronlik qilgan mahalliy sulola qanday nomlangan?", options: ["Somoniylar", "Afrig'iylar", "Saljuqiylar", "Qarluqlar"], ans: "B" },
-  { id: 13, topic: "3–4-mavzular. IV–VII asrlarda Xorazm", q: "Afrig'iylar sulolasining asoschisi kim bo'lgan?", options: ["Afrig'", "Kidar", "Bumin", "Ismoil"], ans: "A" },
-  { id: 14, topic: "3–4-mavzular. IV–VII asrlarda Xorazm", q: "Xorazmning qadimgi poytaxti qaysi shahar bo'lgan?", options: ["Kat", "Buxoro", "Samarqand", "Termiz"], ans: "A" },
-  { id: 15, topic: "3–4-mavzular. IV–VII asrlarda Xorazm", q: "Xorazm davlatining dastlabki poytaxti qaysi shahar xarobasi o'rnida bo'lgan deb taxmin qilinadi?", options: ["Afrosiyob", "Tuproqqal'a", "Poykand", "Varaxsha"], ans: "B" },
-
-  { id: 16, topic: "5-mavzu. IV–V asrlarda Xioniylar va Kidariylar", q: "Xioniylar qaysi davrda Zarafshon vohasini egallagan?", options: ["III asrda", "IV asrda", "VI asrda", "VIII asrda"], ans: "B" },
-  { id: 17, topic: "5-mavzu. IV–V asrlarda Xioniylar va Kidariylar", q: "G'arb tarixchilari xioniylarni kimlarga qarindosh deb hisoblaydilar?", options: ["Massagetlarga", "Xunnlarga («oq xunnlar»)", "Sug'diylarga", "Skiflarga"], ans: "B" },
-  { id: 18, topic: "5-mavzu. IV–V asrlarda Xioniylar va Kidariylar", q: "Kidariylarga boshchilik qilgan hukmdorning ismi nima edi?", options: ["Kidar", "Eftalon", "Vaxshunvar", "Afrig'"], ans: "A" },
-  { id: 19, topic: "5-mavzu. IV–V asrlarda Xioniylar va Kidariylar", q: "Kidariylar Hindistonda qaysi davlatni egallab, qancha yil hukmronlik qilgan?", options: ["Gupta davlatini, 75 yil", "Maurya davlatini, 50 yil", "Kushon davlatini, 100 yil", "Xorazmni, 30 yil"], ans: "A" },
-  { id: 20, topic: "5-mavzu. IV–V asrlarda Xioniylar va Kidariylar", q: "Kidariylar dastlab qaysi hududda yashagan?", options: ["Sharqiy Turkistonda", "Farg'ona vodiysida", "Xorazmda", "Kavkazda"], ans: "A" },
-
-  { id: 21, topic: "6–7-mavzular. Eftaliylar", q: "Eftaliylar davlati qaysi asrlarda hukmronlik qilgan?", options: ["III–IV asrlarda", "V–VI asrlarda", "VIII–IX asrlarda", "X–XI asrlarda"], ans: "B" },
-  { id: 22, topic: "6–7-mavzular. Eftaliylar", q: "«Eftaliylar» nomi kimning ismidan olingan deb hisoblanadi?", options: ["Eftalon degan shoh ismidan", "Kidar ismidan", "Bumin ismidan", "Afrig' ismidan"], ans: "A" },
-  { id: 23, topic: "6–7-mavzular. Eftaliylar", q: "Eftaliylar davlatining dastlabki poytaxti qaysi shaharlar bo'lgan?", options: ["Buxoro yaqinidagi Poykent va Varaxsha", "Samarqand va Panjikent", "Termiz va Kesh", "Kat va Xiva"], ans: "A" },
-  { id: 24, topic: "6–7-mavzular. Eftaliylar", q: "484-yilda Eron sosoniylari shohi Pero'z eftaliylarga qarshi urushda nima bo'ldi?", options: ["G'alaba qozondi", "Halok bo'ldi", "Sulh tuzdi", "Chekindi"], ans: "B" },
-  { id: 25, topic: "6–7-mavzular. Eftaliylar", q: "Eftaliylar alifbosi qaysi yozuv asosida shakllangan va necha harfdan iborat bo'lgan?", options: ["Sug'd yozuvi, 30 harf", "Baqtriya yozuvi, 25 harf", "Arab yozuvi, 28 harf", "Run yozuvi, 38 harf"], ans: "B" },
-
-  { id: 26, topic: "8–9-mavzular. Turk xoqonligi", q: "Turk xoqonligining asoschisi kim bo'lgan?", options: ["Bumin", "Istami", "Kidar", "Afrig'"], ans: "A" },
-  { id: 27, topic: "8–9-mavzular. Turk xoqonligi", q: "Turk xoqonligi qachon va qayerda tashkil topgan?", options: ["VI asrda Oltoy va Janubiy Sibirda", "IV asrda Xorazmda", "VIII asrda Farg'onada", "X asrda Buxoroda"], ans: "A" },
-  { id: 28, topic: "8–9-mavzular. Turk xoqonligi", q: "Turk xoqonligi VI asrning 80-yillari oxirida nechaga bo'lingan?", options: ["Uchga", "Ikkiga (Sharqiy va G'arbiy)", "To'rtga", "Bo'linmagan"], ans: "B" },
-  { id: 29, topic: "8–9-mavzular. Turk xoqonligi", q: "Turk xoqonligida hokimiyat qaysi xonadonga tegishli deb ishonilgan?", options: ["Ashina xonadoniga", "Saljuqiy xonadoniga", "Chig'atoy xonadoniga", "Afrig'iy xonadoniga"], ans: "A" },
-  { id: 30, topic: "8–9-mavzular. Turk xoqonligi", q: "Turk xoqonligida ko'chmanchi chorvador aholi qanday nom bilan yuritilgan?", options: ["Budun (qora budun)", "Dehqon", "Kadivar", "Yabg'u"], ans: "A" },
-
-  { id: 31, topic: "10–11-mavzular. G'arbiy Turk xoqonligi", q: "G'arbiy Turk xoqonligi qaysi asrning birinchi choragida taraqqiy etgan?", options: ["VI asr", "VII asr", "VIII asr", "IX asr"], ans: "B" },
-  { id: 32, topic: "10–11-mavzular. G'arbiy Turk xoqonligi", q: "G'arbiy Turk xoqonligida islohotlarni amalga oshirgan xoqon kim bo'lgan?", options: ["Bumin xoqon", "To'n yabg'u xoqon", "Istami xoqon", "Kul tegin"], ans: "B" },
-  { id: 33, topic: "10–11-mavzular. G'arbiy Turk xoqonligi", q: "Viloyat hokimlariga xoqonlik tomonidan beriladigan unvon nima deb atalgan?", options: ["Yabg'u", "Ixshid", "Afshin", "Tudun"], ans: "A" },
-  { id: 34, topic: "10–11-mavzular. G'arbiy Turk xoqonligi", q: "G'arbiy Turk xoqonligi poytaxti qayerda joylashgan edi?", options: ["Yettisuvda", "O'tukan vodiysida", "Buxoroda", "Xorazmda"], ans: "A" },
-  { id: 35, topic: "10–11-mavzular. G'arbiy Turk xoqonligi", q: "Sug'dda oldi-sotdi va nikohga oid shartnomalar qanday tuziladi va tasdiqlangan?", options: ["Og'zaki, guvohsiz", "Yozma shaklda, guvohlar oldida, muhr bilan", "Faqat qozi tomonidan", "Umuman tuzilmagan"], ans: "B" },
-
-  { id: 36, topic: "12–13-mavzular. Mahalliy hokimliklarning tashkil topishi", q: "V–VII asrlarda Turk xoqonligi necha mustaqil hokimlikka bo'lingan edi?", options: ["5 dan ortiq", "10 dan ortiq", "15 dan ortiq", "20 dan ortiq"], ans: "C" },
-  { id: 37, topic: "12–13-mavzular. Mahalliy hokimliklarning tashkil topishi", q: "Toxariston hukmdorlari qanday unvon bilan atalgan?", options: ["Ixshid", "Malikshoh", "Xudot", "Afshin"], ans: "B" },
-  { id: 38, topic: "12–13-mavzular. Mahalliy hokimliklarning tashkil topishi", q: "Sug'd va Farg'ona hukmdorlari qanday unvon bilan atalgan?", options: ["Ixshid", "Tudun", "Xorazmshoh", "Afshin"], ans: "A" },
-  { id: 39, topic: "12–13-mavzular. Mahalliy hokimliklarning tashkil topishi", q: "Buxoro hukmdorlari qanday unvon bilan atalgan?", options: ["Xudot", "Ixrid", "Malikshoh", "Tudun"], ans: "A" },
-  { id: 40, topic: "12–13-mavzular. Mahalliy hokimliklarning tashkil topishi", q: "Choch hukmdorlari qanday unvon bilan atalgan?", options: ["Afshin", "Tudun", "Ixshid", "Xudot"], ans: "B" },
-
-  { id: 41, topic: "14–15-mavzular. Turon xalqlarining harbiy san'ati", q: "«Turon» atamasi dastlab qaysi manbada tilga olingan?", options: ["Qur'oni karimda", "Avestoda", "Shohnomada", "Bibliyada"], ans: "B" },
-  { id: 42, topic: "14–15-mavzular. Turon xalqlarining harbiy san'ati", q: "Arab adibi Johizning fikricha, qaysi xalq harbiy ishda ustun bo'lgan?", options: ["Xitoyliklar", "Yunonlar", "Turklar", "Forslar"], ans: "C" },
-  { id: 43, topic: "14–15-mavzular. Turon xalqlarining harbiy san'ati", q: "Turk xoqonligi armiyasi qanday bo'linmalardan tashkil topgan?", options: ["O'nlik, yuzlik, minglik, o'n minglik (tuman)", "Faqat piyoda va otliq", "Faqat viloyat lashkarlari", "Qabila militsiyasi"], ans: "A" },
-  { id: 44, topic: "14–15-mavzular. Turon xalqlarining harbiy san'ati", q: "Turk qo'shinlarida paydo bo'lgan yangi uzun va og'ir qilich turi qanday nomlangan?", options: ["Palash", "Nayza", "Gurzi", "Kamon"], ans: "A" },
-  { id: 45, topic: "14–15-mavzular. Turon xalqlarining harbiy san'ati", q: "Turk jangchilari o'z tumanining nishoni (tug'i)ga nimani belgi qilib olishgan?", options: ["Yulduz", "Bo'ri boshi yoki boshqa hayvon", "Quyosh", "Yarim oy"], ans: "B" },
-
-  { id: 46, topic: "16–17-mavzular. VI–VII asrlarda Turon xalqlari madaniy hayoti", q: "Turkiy xalqlarning eng qadimgi yozma manbasi qaysi asar hisoblanadi?", options: ["Shohnoma", "Avesto", "Qutadg'u bilig", "Devonu lug'ot-turk"], ans: "B" },
-  { id: 47, topic: "16–17-mavzular. VI–VII asrlarda Turon xalqlari madaniy hayoti", q: "Turk run (ko'k-turk) yozuvi necha harfdan iborat bo'lgan?", options: ["20-25", "38-40", "50-55", "60-70"], ans: "B" },
-  { id: 48, topic: "16–17-mavzular. VI–VII asrlarda Turon xalqlari madaniy hayoti", q: "Buddaviy o'quv maskanlari (viharalar)da asosiy fan sifatida nima o'qitilgan?", options: ["Matematika", "Daxarma (diniy qonun-qoidalar)", "Astronomiya", "Tibbiyot"], ans: "B" },
-  { id: 49, topic: "16–17-mavzular. VI–VII asrlarda Turon xalqlari madaniy hayoti", q: "Yahudiylar Movarounnahrga qaysi hodisadan so'ng ko'chib kela boshlagan?", options: ["Ossuriya quvg'inlaridan so'ng", "Rim istilosidan so'ng", "Arab istilosidan so'ng", "Mo'g'ul bosqinidan so'ng"], ans: "A" },
-  { id: 50, topic: "16–17-mavzular. VI–VII asrlarda Turon xalqlari madaniy hayoti", q: "Xorazmda bolalarga qaysi fanlardan ta'lim berilgan?", options: ["Faqat harbiy fanlar", "Geografiya, zoologiya, botanika, astronomiya, muhandislik, tibbiyot", "Faqat diniy ta'lim", "Faqat savdo hisobi"], ans: "B" },
-
-  { id: 51, topic: "18–19-mavzular. VII–VIII asr boshlarida Turonda siyosiy vaziyat", q: "Arablar birinchi bo'lib qaysi shaharni istilo qilishgan (651-yil)?", options: ["Buxoro", "Marv", "Samarqand", "Termiz"], ans: "B" },
-  { id: 52, topic: "18–19-mavzular. VII–VIII asr boshlarida Turonda siyosiy vaziyat", q: "Arablar Amudaryodan o'tib, Movarounnahrga birinchi yirik hujumni qachon boshlaydilar?", options: ["651-yilda", "654-yilda", "705-yilda", "873-yilda"], ans: "B" },
-  { id: 53, topic: "18–19-mavzular. VII–VIII asr boshlarida Turonda siyosiy vaziyat", q: "Movarounnahrni deyarli to'liq bosib olgan Xuroson noibi kim bo'lgan?", options: ["Qutayba ibn Muslim", "Ubaydulloh ibn Ziyod", "Abu Muslim", "Ziyod ibn Solih"], ans: "A" },
-  { id: 54, topic: "18–19-mavzular. VII–VIII asr boshlarida Turonda siyosiy vaziyat", q: "Qutayba ibn Muslim 705–715-yillarda qaysi shaharlarni bosib oladi?", options: ["Faqat Buxoro va Samarqandni", "Chag'oniyon, Poykand, Buxoro, Naxshab, Kesh, Xorazm, Samarqand, Choch, Farg'ona", "Faqat Xorazmni", "Faqat Termizni"], ans: "B" },
-  { id: 55, topic: "18–19-mavzular. VII–VIII asr boshlarida Turonda siyosiy vaziyat", q: "Arablar Amudaryoning narigi tomonidagi hududni nima deb atashgan?", options: ["Turkiston", "Movarounnahr", "Xuroson", "Turon"], ans: "B" },
-
-  { id: 56, topic: "20–21-mavzular. VIII asrda Xuroson va Movarounnahr", q: "Umaviylarga qarshi kurashga da'vat etuvchi harakatga boshchilik qilgan targ'ibotchi kim edi?", options: ["Qutayba ibn Muslim", "Abu Muslim", "Abul Abbos Saffoh", "Nasr ibn Sayyor"], ans: "B" },
-  { id: 57, topic: "20–21-mavzular. VIII asrda Xuroson va Movarounnahr", q: "Abu Muslim qaysi shaharni egallab, Xurosonning markaziga aylantiradi?", options: ["Buxoro", "Marv", "Samarqand", "Nishopur"], ans: "B" },
-  { id: 58, topic: "20–21-mavzular. VIII asrda Xuroson va Movarounnahr", q: "Arab xalifaligining Abbosiylar sulolasi asoschisi kim bo'lgan?", options: ["Abul Abbos Saffoh", "Marvon Muhammad", "Horun ar-Rashid", "Ma'mun"], ans: "A" },
-  { id: 59, topic: "20–21-mavzular. VIII asrda Xuroson va Movarounnahr", q: "751-yilgi Talas jangida qaysi ikki davlat qo'shini to'qnashdi?", options: ["Arablar va Vizantiya", "Arablar va Xitoy (Tan imperiyasi)", "Turklar va forslar", "Xitoy va Vizantiya"], ans: "B" },
-  { id: 60, topic: "20–21-mavzular. VIII asrda Xuroson va Movarounnahr", q: "Talas jangidan keyin Samarqandga olib kelingan xitoylik hunarmandlar qaysi sohada muhim rol o'ynadi?", options: ["Temirchilikda", "Qog'oz ishlab chiqarishda", "Kulolchilikda", "Zargarlikda"], ans: "B" },
-
-  { id: 61, topic: "22–23-mavzular. Qarluqlar, o'g'uzlar, tohiriylar", q: "Qarluqlar davlatining poytaxti qaysi shahar bo'lgan?", options: ["Suyob", "Yangikent", "Marv", "Nishopur"], ans: "A" },
-  { id: 62, topic: "22–23-mavzular. Qarluqlar, o'g'uzlar, tohiriylar", q: "O'g'uzlar davlatining poytaxti qaysi shahar bo'lgan?", options: ["Suyob", "Yangikent", "Buxoro", "Kat"], ans: "B" },
-  { id: 63, topic: "22–23-mavzular. Qarluqlar, o'g'uzlar, tohiriylar", q: "Tohiriylar sulolasiga kim asos solgan?", options: ["Tohir ibn Husayn", "Ya'qub ibn Lays", "Ismoil Somoniy", "Alptegin"], ans: "A" },
-  { id: 64, topic: "22–23-mavzular. Qarluqlar, o'g'uzlar, tohiriylar", q: "Safforiylar sulolasi nomi kimning nomidan olingan?", options: ["Tohir ibn Husaynning", "Ya'qub ibn Lays as-Safforning", "Ma'munning", "Nasr ibn Ahmadning"], ans: "B" },
-  { id: 65, topic: "22–23-mavzular. Qarluqlar, o'g'uzlar, tohiriylar", q: "Tohiriylar qaysi yillarda hukmronlik qilgan?", options: ["711–750", "821–873", "873–900", "900–999"], ans: "B" },
-
-  { id: 66, topic: "24–25-mavzular. Somoniylar", q: "Somoniylar davlatiga kim asos solgan (Movarounnahrni birlashtirgan)?", options: ["Nasr Somoniy", "Ismoil Somoniy", "Ahmad Somoniy", "Nasr Ahmad (Nasr II)"], ans: "B" },
-  { id: 67, topic: "24–25-mavzular. Somoniylar", q: "Ismoil Somoniy 888-yilgi jangda kimni yengadi?", options: ["Akasi Nasrni", "Ya'qub ibn Laysni", "Mahmud G'aznaviyni", "Alptegin"], ans: "A" },
-  { id: 68, topic: "24–25-mavzular. Somoniylar", q: "Somoniylar davlatining poytaxti qaysi shahar edi?", options: ["Samarqand", "Buxoro", "Marv", "Xiva"], ans: "B" },
-  { id: 69, topic: "24–25-mavzular. Somoniylar", q: "Somoniylar davlatida davlat ishlarini boshqargan asosiy mahkama qanday nomlangan?", options: ["Devon", "Kengash", "Devonxona", "Ma'muriyat"], ans: "A" },
-  { id: 70, topic: "24–25-mavzular. Somoniylar", q: "Nasr Ahmad (Nasr II) davrida devonlar qayerda joylashgan maxsus binoga ko'chiriladi?", options: ["Samarqand Registonida", "Buxoro Registonida", "Marv qal'asida", "Termiz qasrida"], ans: "B" },
-
-  { id: 71, topic: "26–27-mavzular. Somoniylar davrida ijtimoiy-iqtisodiy hayot", q: "Somoniylar davrida qishloq xo'jaligida qaysi soha katta e'tibor topgan?", options: ["Faqat chorvachilik", "Dehqonchilik", "Faqat baliqchilik", "Faqat ovchilik"], ans: "B" },
-  { id: 72, topic: "26–27-mavzular. Somoniylar davrida ijtimoiy-iqtisodiy hayot", q: "Somoniylar davrida savdogarlar o'z pullarini kimga topshirib, chek olishgan?", options: ["Qozilarga", "Sarroflarga", "Hokimlarga", "Muhtasiblarga"], ans: "B" },
-  { id: 73, topic: "26–27-mavzular. Somoniylar davrida ijtimoiy-iqtisodiy hayot", q: "Somoniylar davrida zarb etilgan tanga turlari qanday nomlangan?", options: ["Dirham va dinor", "«Ismoiliy» va «muhammadiy»", "Yamg'u puli", "Iqto puli"], ans: "B" },
-  { id: 74, topic: "26–27-mavzular. Somoniylar davrida ijtimoiy-iqtisodiy hayot", q: "Farsax (farsang) o'lchov birligi taxminan necha km ga teng bo'lgan?", options: ["3 km", "6 km", "10 km", "15 km"], ans: "B" },
-  { id: 75, topic: "26–27-mavzular. Somoniylar davrida ijtimoiy-iqtisodiy hayot", q: "Buxoroning yuqori navli qog'ozi qanday nom bilan mashhur bo'lgan?", options: ["Samarqand qog'ozi", "Buxoro qog'ozi", "Xorazm qog'ozi", "Marv qog'ozi"], ans: "B" },
-
-  { id: 76, topic: "28–29-mavzular. G'aznaviylar", q: "G'aznaviylar davlatiga kim asos solgan (G'aznani mustaqil boshqara boshlagan)?", options: ["Alptegin", "Sabuktegin", "Mahmud G'aznaviy", "Ismoil Somoniy"], ans: "A" },
-  { id: 77, topic: "28–29-mavzular. G'aznaviylar", q: "G'aznaviylar davlatining nomi qaysi shahar nomidan olingan?", options: ["Buxoro", "G'azna", "Marv", "Kobul"], ans: "B" },
-  { id: 78, topic: "28–29-mavzular. G'aznaviylar", q: "Bag'dod xalifasi Mahmud G'aznaviyga qanday faxriy unvon bergan?", options: ["Amir ul-mo'minin", "Yamin ud-davla va amin ul-milla", "Shahanshoh", "Xoqoni a'zam"], ans: "B" },
-  { id: 79, topic: "28–29-mavzular. G'aznaviylar", q: "Mahmud G'aznaviy qaysi yili vafot etgan?", options: ["1017", "1030", "1048", "1055"], ans: "B" },
-  { id: 80, topic: "28–29-mavzular. G'aznaviylar", q: "Sulton Mahmud G'aznaviy fors shoiri Abul Qosimga qanday taxallus bergan?", options: ["Sanoiy", "Firdavsiy", "Unsuriy", "Farruxiy"], ans: "B" },
-
-  { id: 81, topic: "30–31-mavzular. Qoraxoniylar", q: "Qoraxoniylar sulolasi qaysi asrda Somoniylar davlati o'rnida vujudga keladi?", options: ["IX asr", "X asr", "XII asr", "XIV asr"], ans: "B" },
-  { id: 82, topic: "30–31-mavzular. Qoraxoniylar", q: "Qoraxoniylarning Turondagi hukmronligi qancha davom etgan?", options: ["50 yil", "100 yil", "200 yilga yaqin", "300 yil"], ans: "C" },
-  { id: 83, topic: "30–31-mavzular. Qoraxoniylar", q: "1008-yilda Mahmud G'aznaviy qoraxoniylarga qarshi jangda nimadan foydalangan?", options: ["Manjaniqlardan", "500 ta jang fili", "Dengiz flotidan", "Otliq lashkardan"], ans: "B" },
-  { id: 84, topic: "30–31-mavzular. Qoraxoniylar", q: "XI asrning uchinchi choragida Qoraxoniylar davlati nechaga bo'lingan?", options: ["Ikkiga (G'arbiy va Sharqiy)", "Uchga", "To'rtga", "Bo'linmagan"], ans: "A" },
-  { id: 85, topic: "30–31-mavzular. Qoraxoniylar", q: "Sharqiy Turkistondan Xorazmgacha bo'lgan hududlar yagona savdo yo'li orqali qanday nom bilan bog'langan?", options: ["Buyuk ipak yo'li", "Buyuk dengiz yo'li", "Baqtriya yo'li", "Sug'd yo'li"], ans: "A" },
-
-  { id: 86, topic: "32–33-mavzular. Saljuqiylar", q: "Saljuqiylar dastlab qaysi qavm tarkibida bo'lgan?", options: ["Qarluqlar", "O'g'uz qavmi", "Qoraxoniylar", "Qoraxitoylar"], ans: "B" },
-  { id: 87, topic: "32–33-mavzular. Saljuqiylar", q: "Saljuqiy Sulton Alp Arslon Kichik Osiyoda qaysi Vizantiya podshosini yengadi?", options: ["Roman IV Diogen", "Iustinian", "Konstantin", "Aleksey"], ans: "A" },
-  { id: 88, topic: "32–33-mavzular. Saljuqiylar", q: "Saljuqiylar poytaxti bo'lgan Buyuk Saljuqiylar saltanati qaysi shaharni o'z ichiga olgan?", options: ["Isfahon", "Bag'dod", "Marv", "Barchasi to'g'ri"], ans: "D" },
-  { id: 89, topic: "32–33-mavzular. Saljuqiylar", q: "Nizomulmulk kimning mashhur vaziri bo'lgan?", options: ["Sulton Malikshohning", "Mahmud G'aznaviyning", "Ismoil Somoniynig", "Alovuddin Muhammadning"], ans: "A" },
-  { id: 90, topic: "32–33-mavzular. Saljuqiylar", q: "Nizomulmulkning davlat boshqaruviga oid mashhur asari qanday nomlanadi?", options: ["Qutadg'u bilig", "Siyosatnoma", "Shohnoma", "Devonu lug'ot-turk"], ans: "B" },
-
-  { id: 91, topic: "34–35-mavzular. Xorazmshohlar davlati va uning yuksalishi", q: "Xorazmshohlar (Anushteginiylar) sulolasiga kim asos solgan?", options: ["Anushtegin", "Otsiz", "Takash", "Alovuddin Muhammad"], ans: "A" },
-  { id: 92, topic: "34–35-mavzular. Xorazmshohlar davlati va uning yuksalishi", q: "Anushtegin 1077-yilda qaysi lavozimga tayinlanadi?", options: ["Buxoro hokimi", "Xorazm hokimi", "Marv noibi", "Bag'dod noibi"], ans: "B" },
-  { id: 93, topic: "34–35-mavzular. Xorazmshohlar davlati va uning yuksalishi", q: "Xorazmshoh Otsiz kimning vassali sifatida boshlagan va keyin mustaqillikka intilgan?", options: ["Mahmud G'aznaviyning", "Sulton Sanjarning", "Qoraxoniylarning", "Chingizxonning"], ans: "B" },
-  { id: 94, topic: "34–35-mavzular. Xorazmshohlar davlati va uning yuksalishi", q: "Alovuddin Muhammad hukmronligi qaysi yillarni o'z ichiga oladi?", options: ["1150–1170", "1200–1220", "1220–1250", "1000–1017"], ans: "B" },
-  { id: 95, topic: "34–35-mavzular. Xorazmshohlar davlati va uning yuksalishi", q: "Alovuddin Muhammad qaysi laqablar bilan mashhur bo'lgan?", options: ["Ikkinchi Iskandar, ikkinchi Sulton Sanjar", "Jahon hokimi", "Sharq Arastusi", "Ikkinchi muallim"], ans: "A" },
-
-  { id: 96, topic: "36–37-mavzular. Xorazmshohlar davlat boshqaruvi va ijtimoiy-iqtisodiy hayot", q: "Sulton Muhammad Xorazmshoh o'zining poytaxti qilib qaysi shaharni e'lon qildi?", options: ["Gurganch", "Samarqand", "Buxoro", "Marv"], ans: "B" },
-  { id: 97, topic: "36–37-mavzular. Xorazmshohlar davlat boshqaruvi va ijtimoiy-iqtisodiy hayot", q: "Turkon xotun kimning onasi bo'lgan?", options: ["Alovuddin Muhammadning", "Otsizning", "Takashning", "El Arslonning"], ans: "A" },
-  { id: 98, topic: "36–37-mavzular. Xorazmshohlar davlat boshqaruvi va ijtimoiy-iqtisodiy hayot", q: "Turkon xotun kelib chiqishiga ko'ra qaysi urug'dan bo'lgan?", options: ["Qang'li urug'idan", "Qarluq urug'idan", "Qoraxoniy urug'idan", "Sug'd urug'idan"], ans: "A" },
-  { id: 99, topic: "36–37-mavzular. Xorazmshohlar davlat boshqaruvi va ijtimoiy-iqtisodiy hayot", q: "Xorazmshohlar davlatida davlat ishlarining boshqarilishida bosh mansabdor kim hisoblangan?", options: ["Vazir", "Qozi", "Muhtasib", "Amir ul-jaysh"], ans: "A" },
-  { id: 100, topic: "36–37-mavzular. Xorazmshohlar davlat boshqaruvi va ijtimoiy-iqtisodiy hayot", q: "Xorazmshohlar davlatida savdo va bozorlar rivojiga qaysi shahar alohida ahamiyatga ega bo'lgan?", options: ["Urganch", "Marv", "Bag'dod", "Isfahon"], ans: "A" },
-
-  { id: 101, topic: "38-mavzu. Etnik jarayonlar va o'zbek xalqining shakllanishi", q: "O'zbek xalqi shakllanishida ishtirok etgan asosiy etnik guruhlar qatoriga kim kirmaydi?", options: ["Sug'diylar", "Kushonlar", "Turkiy qabilalar", "Vikinglar"], ans: "D" },
-  { id: 102, topic: "38-mavzu. Etnik jarayonlar va o'zbek xalqining shakllanishi", q: "O'lkamiz qachondan «Turkiston» nomi bilan atala boshlangan?", options: ["V asrdan", "VII asrdan", "X asrdan", "XIII asrdan"], ans: "B" },
-  { id: 103, topic: "38-mavzu. Etnik jarayonlar va o'zbek xalqining shakllanishi", q: "O'zbek xalqining shakllanishida yakuniy bosqich qaysi sulola davriga to'g'ri keladi?", options: ["Somoniylar", "Qoraxoniylar", "G'aznaviylar", "Saljuqiylar"], ans: "B" },
-  { id: 104, topic: "38-mavzu. Etnik jarayonlar va o'zbek xalqining shakllanishi", q: "IX asrda Movarounnahrda qanday etnik jarayon yuz berdi?", options: ["Yaxlit turkiy etnik qatlam va til muhitining vujudga kelishi", "Faqat forsiy tilning yoyilishi", "Arab tilining ustunligi", "Mo'g'ul tilining tarqalishi"], ans: "A" },
-  { id: 105, topic: "38-mavzu. Etnik jarayonlar va o'zbek xalqining shakllanishi", q: "Movarounnahrda yashagan aholi qadimdan ikki tilda so'zlashgan, ular qaysilar?", options: ["Arab va fors", "Sug'd va turk", "Xitoy va sug'd", "Fors va turk"], ans: "B" },
-
-  { id: 106, topic: "39–40-mavzular. Mintaqada islom dinining yoyilishi", q: "Islom dini kirib kelgach, Turon ikki qismga bo'lindi. Bular qaysilar?", options: ["Movarounnahr va Arodi at-turk", "Sharqiy va G'arbiy Turon", "Yuqori va Quyi Turon", "Shimoliy va Janubiy Turon"], ans: "A" },
-  { id: 107, topic: "39–40-mavzular. Mintaqada islom dinining yoyilishi", q: "Hanafiylik mazhabi asoschisi kim hisoblanadi?", options: ["Imom Ash'ariy", "Abu Hanifa (Nu'mon ibn Sobit)", "Imom Moturidiy", "Imom Buxoriy"], ans: "B" },
-  { id: 108, topic: "39–40-mavzular. Mintaqada islom dinining yoyilishi", q: "Abu Hanifaga sunniylar tomonidan qanday unvon berilgan?", options: ["Imomi A'zam", "Shayx ar-rais", "Hujjatul islom", "Ikkinchi muallim"], ans: "A" },
-  { id: 109, topic: "39–40-mavzular. Mintaqada islom dinining yoyilishi", q: "Moturidiya ta'limotiga kim asos solgan?", options: ["Imom Ash'ariy", "Abu Mansur Moturidiy", "Abu Hanifa", "Abu Homid G'azzoliy"], ans: "B" },
-  { id: 110, topic: "39–40-mavzular. Mintaqada islom dinining yoyilishi", q: "Buxoro shahri islom dinining yoyilishi natijasida qanday nom bilan mashhur bo'lgan?", options: ["Qubbatul islom", "Baytul hikma", "Darul aman", "Madinat as-salom"], ans: "A" },
-
-  { id: 111, topic: "41–42-mavzular. Ta'lim", q: "Abu Homid G'azzoliy o'z davrida qanday nom bilan mashhur bo'lgan?", options: ["Hujjatul islom", "Imomi A'zam", "Sharq Arastusi", "Ikkinchi muallim"], ans: "A" },
-  { id: 112, topic: "41–42-mavzular. Ta'lim", q: "Buxoroda ilk oliy o'quv yurtlaridan biri (madrasa) taxminan qachon paydo bo'lgan?", options: ["V–VI asrda", "VIII–IX asrda", "XI–XII asrda", "XV asrda"], ans: "B" },
-  { id: 113, topic: "41–42-mavzular. Ta'lim", q: "IX asr boshlarida Balxda nechta madrasa va maktab bo'lgan?", options: ["100 madrasa, 200 maktab", "400 madrasa, 900 maktab", "1000 madrasa, 2000 maktab", "50 madrasa, 100 maktab"], ans: "B" },
-  { id: 114, topic: "41–42-mavzular. Ta'lim", q: "Boshlang'ich ta'limda bolalar necha yoshdan o'qitilgan?", options: ["3 yoshdan", "6 yoshdan 12 yoshgacha", "15 yoshdan", "18 yoshdan"], ans: "B" },
-  { id: 115, topic: "41–42-mavzular. Ta'lim", q: "Nizomiya madrasalarida talabalarga qanday moddiy yordam berilgan?", options: ["Stipendiya", "Yer uchastkasi", "Uy-joy", "Chorva mollari"], ans: "A" },
-
-  { id: 116, topic: "43–44-mavzular. Aql-zakovat bilan bunyod etilgan boy ma'naviyat", q: "Imom Buxoriyning mashhur hadislar to'plami qanday nomlanadi?", options: ["Al-Jome as-sahih", "Hidoya", "Siyosatnoma", "Kitob al-tafhim"], ans: "A" },
-  { id: 117, topic: "43–44-mavzular. Aql-zakovat bilan bunyod etilgan boy ma'naviyat", q: "Imom Buxoriy o'z asarini necha yil davomida yozib tugatgan?", options: ["5 yil", "10 yil", "16 yil", "25 yil"], ans: "C" },
-  { id: 118, topic: "43–44-mavzular. Aql-zakovat bilan bunyod etilgan boy ma'naviyat", q: "Imom Termiziy qayerda (qaysi hozirgi tuman hududida) tug'ilgan?", options: ["Sherobod tumanida", "Denov tumanida", "Boysun tumanida", "Qumqo'rg'on tumanida"], ans: "A" },
-  { id: 119, topic: "43–44-mavzular. Aql-zakovat bilan bunyod etilgan boy ma'naviyat", q: "Zamaxshariy qanday laqab bilan ulug'langan?", options: ["Jorulloh («Allohning qo'shnisi»)", "Imomi A'zam", "Shayx ar-rais", "Hakim al-vazir"], ans: "A" },
-  { id: 120, topic: "43–44-mavzular. Aql-zakovat bilan bunyod etilgan boy ma'naviyat", q: "Imom Burhoniddin Marg'inoniyning fiqhga oid mashhur asari qanday nomlanadi?", options: ["Hidoya", "Al-Jome as-sahih", "Buxoro tarixi", "Qonuni Mas'udiy"], ans: "A" },
-
-  { id: 121, topic: "45–46-mavzular. IX–XII asrlarda ilm-fan va madaniyatning yuksalishi", q: "Abu Bakr Narshaxiyning mashhur tarixiy asari qanday nomlanadi?", options: ["Buxoro tarixi", "Hidoya", "Shohnoma", "Devonu lug'ot-turk"], ans: "A" },
-  { id: 122, topic: "45–46-mavzular. IX–XII asrlarda ilm-fan va madaniyatning yuksalishi", q: "Narshaxiy «Buxoro tarixi»ni kimga bag'ishlab yozgan?", options: ["Ismoil Somoniyga", "Nuh ibn Nasrga", "Mahmud G'aznaviyni", "Alp Arslonga"], ans: "B" },
-  { id: 123, topic: "45–46-mavzular. IX–XII asrlarda ilm-fan va madaniyatning yuksalishi", q: "Xorazm Ma'mun akademiyasiga kim asos solgan?", options: ["Abul Hasan Ali ibn Ma'mun", "Mahmud G'aznaviy", "Ismoil Somoniy", "Nizomulmulk"], ans: "A" },
-  { id: 124, topic: "45–46-mavzular. IX–XII asrlarda ilm-fan va madaniyatning yuksalishi", q: "Ma'mun akademiyasida faoliyat yuritgan buyuk olimlar qatoriga kim kirmaydi?", options: ["Abu Rayhon Beruniy", "Abu Ali ibn Sino", "Imom Buxoriy", "Ikkalasi ham ishtirok etgan"], ans: "C" },
-  { id: 125, topic: "45–46-mavzular. IX–XII asrlarda ilm-fan va madaniyatning yuksalishi", q: "2006-yilda mamlakatimizda nima nishonlangan?", options: ["Xorazm Ma'mun akademiyasining 1000 yilligi", "Beruniyning 1000 yilligi", "Ibn Sinoning 1000 yilligi", "Buxoro shahrining 2500 yilligi"], ans: "A" },
-
-  { id: 126, topic: "47–48-mavzular. Muhammad ibn Muso al-Xorazmiy", q: "Muhammad ibn Muso al-Xorazmiy qayerda tug'ilgan?", options: ["Buxoroda", "Xivada", "Marvda", "Termizda"], ans: "B" },
-  { id: 127, topic: "47–48-mavzular. Muhammad ibn Muso al-Xorazmiy", q: "«Algebra» so'zi al-Xorazmiyning qaysi asaridan olingan?", options: ["Al-jabr val-muqobala", "Zij", "Kitob surat al-arz", "Usturlob yasash haqida kitob"], ans: "A" },
-  { id: 128, topic: "47–48-mavzular. Muhammad ibn Muso al-Xorazmiy", q: "«Algoritm» so'zi kimning nomidan kelib chiqqan?", options: ["Al-Xorazmiyning (lotinlashtirilgan nomidan)", "Forobiyning", "Beruniyning", "Farg'oniyning"], ans: "A" },
-  { id: 129, topic: "47–48-mavzular. Muhammad ibn Muso al-Xorazmiy", q: "Al-Xorazmiy hind raqamlarini qaysi hisoblash tizimida qo'llashni Yevropaga yetkazishda muhim rol o'ynadi?", options: ["O'nlik hisoblash tizimi", "Oltmishlik tizim", "Rim raqamlari tizimi", "Ikkilik tizim"], ans: "A" },
-  { id: 130, topic: "47–48-mavzular. Muhammad ibn Muso al-Xorazmiy", q: "1976-yilda Oyning kraterlaridan biriga kimning nomi berilgan?", options: ["Muso Xorazmiyning", "Beruniyning", "Farg'oniyning", "Ibn Sinoning"], ans: "A" },
-
-  { id: 131, topic: "49–50-mavzular. Ahmad Farg'oniy", q: "Ahmad Farg'oniy qayerda tug'ilgan?", options: ["Farg'ona vodiysidagi Qubo (Quva) qishlog'ida", "Xivada", "Buxoroda", "Termizda"], ans: "A" },
-  { id: 132, topic: "49–50-mavzular. Ahmad Farg'oniy", q: "Ahmad Farg'oniy qaysi shahardagi rasadxonada faoliyat yuritgan?", options: ["Bag'dod va Damashq", "Samarqand va Buxoro", "Marv va Nishopur", "Kordova va Sevilya"], ans: "A" },
-  { id: 133, topic: "49–50-mavzular. Ahmad Farg'oniy", q: "Farg'oniyning mashhur asari qaysi fanga oid?", options: ["Astronomiya asoslari", "Algebra", "Tibbiyot", "Huquqshunoslik"], ans: "A" },
-  { id: 134, topic: "49–50-mavzular. Ahmad Farg'oniy", q: "Farg'oniy yaratgan, Nil daryosi sathini o'lchash uskunasi qanday nomlangan?", options: ["Usturlob", "Miqyosi Nil", "Zij", "Astrolyabiya"], ans: "B" },
-  { id: 135, topic: "49–50-mavzular. Ahmad Farg'oniy", q: "2007-yilda Misr poytaxti Qohirada kimga haykal o'rnatildi?", options: ["Ahmad Farg'oniyga", "Muso Xorazmiyga", "Beruniyga", "Ibn Sinoga"], ans: "A" },
-
-  { id: 136, topic: "51–52-mavzular. Abu Nasr Forobiy", q: "Forobiy qayerda tug'ilgan?", options: ["Sirdaryo bo'yidagi Forob (O'tror) shahrida", "Buxoroda", "Xivada", "Marvda"], ans: "A" },
-  { id: 137, topic: "51–52-mavzular. Abu Nasr Forobiy", q: "Forobiyga Sharqda qanday unvon berilgan?", options: ["Al-muallim as-Soniy («Ikkinchi muallim»)", "Imomi A'zam", "Shayx ar-rais", "Hujjatul islom"], ans: "A" },
-  { id: 138, topic: "51–52-mavzular. Abu Nasr Forobiy", q: "Forobiy «Ikkinchi muallim» deb ataladi, chunki birinchi muallim kim hisoblangan?", options: ["Aflotun", "Aristotel", "Suqrot", "Gippokrat"], ans: "B" },
-  { id: 139, topic: "51–52-mavzular. Abu Nasr Forobiy", q: "Forobiyning ijtimoiy-siyosiy qarashlari aks etgan mashhur asari qaysi?", options: ["Fozil odamlar shahri", "Al-jabr val-muqobala", "Qonun fit-tib", "Hidoya"], ans: "A" },
-  { id: 140, topic: "51–52-mavzular. Abu Nasr Forobiy", q: "Forobiy qaysi sohada ham nazariy asarlar yozgan (musiqa asbobi tasvirlangan)?", options: ["Musiqa («Musiqa haqida katta kitob»)", "Tibbiyot", "Geodeziya", "Huquqshunoslik"], ans: "A" },
-
-  { id: 141, topic: "53–54-mavzular. Abu Rayhon Beruniy", q: "Abu Rayhon Beruniy qayerda tug'ilgan?", options: ["Qadimgi Kot shahrida", "G'aznada", "Buxoroda", "Marvda"], ans: "A" },
-  { id: 142, topic: "53–54-mavzular. Abu Rayhon Beruniy", q: "Beruniy necha dan ortiq asar yaratgan?", options: ["50 dan ortiq", "150 dan ortiq", "500 dan ortiq", "1000 dan ortiq"], ans: "B" },
-  { id: 143, topic: "53–54-mavzular. Abu Rayhon Beruniy", q: "Beruniyning Yerning Quyosh atrofida aylanishi haqidagi fikri qaysi asarda ilgari surilgan?", options: ["Falakiyotga oid asarlarida", "Saydanada", "Mineralogiyada", "Hindistonda"], ans: "A" },
-  { id: 144, topic: "53–54-mavzular. Abu Rayhon Beruniy", q: "Beruniyning tibbiyotga bag'ishlangan asari qanday nomlanadi?", options: ["Saydana", "Hindiston", "Qadimgi xalqlardan qolgan yodgorliklar", "Geodeziya"], ans: "A" },
-  { id: 145, topic: "53–54-mavzular. Abu Rayhon Beruniy", q: "Beruniy 1017-yildan so'ng qaysi shaharga olib ketiladi va u yerda ijod qiladi?", options: ["G'aznaga", "Bag'dodga", "Isfahonga", "Damashqga"], ans: "A" },
-
-  { id: 146, topic: "55–56-mavzular. Abu Ali ibn Sino", q: "Ibn Sino qayerda tug'ilgan?", options: ["Afshona qishlog'ida (Buxoro)", "G'aznada", "Marvda", "Xivada"], ans: "A" },
-  { id: 147, topic: "55–56-mavzular. Abu Ali ibn Sino", q: "Ibn Sinoga G'arbda qanday nom berilgan?", options: ["Avitsenna", "Alkindus", "Averroes", "Algazel"], ans: "A" },
-  { id: 148, topic: "55–56-mavzular. Abu Ali ibn Sino", q: "Ibn Sinoning tibbiyotga oid mashhur asari qanday nomlanadi?", options: ["Al-qonun fit-tib", "Shifo kitobi", "Najot kitobi", "Ishorat kitobi"], ans: "A" },
-  { id: 149, topic: "55–56-mavzular. Abu Ali ibn Sino", q: "Ibn Sino necha yoshida Qur'oni Karimni to'liq yod olgan?", options: ["8 yoshida", "10 yoshida", "15 yoshida", "18 yoshida"], ans: "B" },
-  { id: 150, topic: "55–56-mavzular. Abu Ali ibn Sino", q: "Ibn Sino Sharqda qanday unvonlar bilan mashhur bo'lgan?", options: ["Shayx ar-rais, Sharaf al-mulk, Hakim al-vazir", "Al-muallim as-Soniy", "Imomi A'zam", "Hujjatul islom"], ans: "A" }
-];
-
-function startQuiz() {
-    const fullname = document.getElementById("fullname").value;
-    const classname = document.getElementById("classname").value;
-
-    if (!fullname || !classname) {
-        alert("Iltimos, Ismingiz va Sinfingizni kiriting!");
+function submitQuiz() {
+    const studentName = document.getElementById("studentName").value.trim();
+    if (!studentName) {
+        alert("Iltimos, ism va familiyangizni kiriting!");
         return;
     }
 
-    document.getElementById("start-page").classList.add("hidden");
-    document.getElementById("quiz-page").classList.remove("hidden");
-
-    renderQuestions();
-}
-
-function renderQuestions() {
-    const container = document.getElementById("questions-container");
-    container.innerHTML = "";
-
-    quizData.forEach((q, index) => {
-        const optionKeys = ["A", "B", "C", "D"];
-        let optionsHTML = "";
-        
-        q.options.forEach((opt, optIndex) => {
-            const letter = optionKeys[optIndex];
-            optionsHTML += `
-                <label class="options-label">
-                    <input type="radio" name="q${q.id}" value="${letter}">
-                    <b>${letter})</b> ${opt}
-                </label>
-            `;
-        });
-
-        container.innerHTML += `
-            <div class="question-card">
-                <span class="topic-badge">${q.topic}</span>
-                <p><b>${index + 1}. ${q.q}</b></p>
-                ${optionsHTML}
-            </div>
-        `;
-    });
-}
-
-function submitQuiz() {
     let score = 0;
-    let wrongTopics = new Set();
+    const totalQuestions = Object.keys(correctAnswers).length;
 
-    quizData.forEach((q) => {
-        const selected = document.querySelector(`input[name="q${q.id}"]:checked`);
-        if (selected && selected.value === q.ans) {
+    for (let key in correctAnswers) {
+        const selected = document.querySelector(`input[name="${key}"]:checked`);
+        if (selected && selected.value === correctAnswers[key]) {
             score++;
-        } else {
-            wrongTopics.add(q.topic);
         }
-    });
-
-    const total = quizData.length;
-    const percent = Math.round((score / total) * 100);
-
-    document.getElementById("quiz-page").classList.add("hidden");
-    document.getElementById("result-page").classList.remove("hidden");
-
-    const fullname = document.getElementById("fullname").value;
-    const classname = document.getElementById("classname").value;
-
-    document.getElementById("res-name").innerText = `${classname} sinf o'quvchisi ${fullname}`;
-    document.getElementById("res-score").innerText = `To'plangan ball: ${score} / ${total}`;
-    document.getElementById("res-percent").innerText = `O'zlashtirish ko'rsatkichingiz: ${percent}%`;
-
-    if (wrongTopics.size > 0) {
-        document.getElementById("topics-to-study").classList.remove("hidden");
-        const list = document.getElementById("wrong-topics-list");
-        list.innerHTML = "";
-        wrongTopics.forEach(topic => {
-            list.innerHTML += `<li>${topic}</li>`;
-        });
     }
+
+    document.getElementById("result").innerText = `Sizning natijangiz: ${score} / ${totalQuestions}`;
+
+    // Telegram Botga natijani yuborish
+    sendResultsToTelegram(studentName, score, totalQuestions);
 }
-</script>
-</body>
-</html>function sendResultsToTelegram(studentName, score, totalQuestions) {
-    const token = '8864127573:AAFNUjjRZaHPXDrjFCr9fQwZ7...'; // BotFather'dan olgan to'liq tokeningiz
+
+function sendResultsToTelegram(studentName, score, totalQuestions) {
+    // BotFather'dan olgan to'liq tokeningizni kiriting (nuqtalarsiz):
+    const token = '8864127573:AAFNUjjRZaHPXDrjFCr9fQwZ7...'; 
     const chatId = '7638021708';
 
     const message = `📚 *Tarixdan Xulosa — Yangi natija!*\n\n` +
@@ -442,6 +126,17 @@ function submitQuiz() {
             text: message,
             parse_mode: 'Markdown'
         })
-    }).catch(err => console.error('Xatolik:', err));
+    })
+    .then(response => {
+        if(response.ok) {
+            alert("Natijangiz ustozga yuborildi!");
+        } else {
+            alert("Xatolik yuz berdi. Bot ma'lumotlarini tekshiring.");
+        }
+    })
+    .catch(err => console.error('Xatolik:', err));
 }
+</script>
 
+</body>
+</html>
