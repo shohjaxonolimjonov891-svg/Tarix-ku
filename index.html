@@ -425,4 +425,23 @@ function submitQuiz() {
 }
 </script>
 </body>
-</html>
+</html>function sendResultsToTelegram(studentName, score, totalQuestions) {
+    const token = '8864127573:AAFNUjjRZaHPXDrjFCr9fQwZ7...'; // BotFather'dan olgan to'liq tokeningiz
+    const chatId = '7638021708';
+
+    const message = `📚 *Tarixdan Xulosa — Yangi natija!*\n\n` +
+                    `👤 *O'quvchi:* ${studentName}\n` +
+                    `📊 *Natija:* ${score} / ${totalQuestions}\n` +
+                    `⏰ *Vaqt:* ${new Date().toLocaleString('uz-UZ')}`;
+
+    fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            chat_id: chatId,
+            text: message,
+            parse_mode: 'Markdown'
+        })
+    }).catch(err => console.error('Xatolik:', err));
+}
+
