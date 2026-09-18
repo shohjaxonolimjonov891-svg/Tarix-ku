@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tarix-ku | Milliy sertifikat testi</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+  :root{
+    --green:#0b6e4f;
+    --green-dark:#08543c;
+    --gold:#c9a227;
+    --bg1:#0b6e4f;
+    --bg2:#134e6f;
+    --card:#ffffff;
+    --text:#1c2b2d;
+    --muted:#6b7a7c;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height:100vh;
+    background:linear-gradient(135deg,var(--bg1),var(--bg2));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    color:var(--text);
+  }
+  .wrap{
+    width:100%;
+    max-width:640px;
+  }
+  .card{
+    background:var(--card);
+    border-radius:18px;
+    box-shadow:0 20px 50px rgba(0,0,0,0.35);
+    padding:30px 26px;
+    animation:fadeIn .35s ease;
+  }
+  @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+  h1{
+    font-size:22px;
+    margin:0 0 6px;
+    color:var(--green-dark);
+  }
+  h2{
+    font-size:17px;
+    margin:0 0 14px;
+    color:var(--muted);
+    font-weight:500;
+  }
+  .logo-row{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:18px;
+  }
+  .logo-badge{
+    width:42px;height:42px;border-radius:50%;
+    background:linear-gradient(135deg,var(--gold),#8a6d1b);
+    display:flex;align-items:center;justify-content:center;
+    font-size:20px;color:#fff;flex-shrink:0;
+  }
+  p{line-height:1.55;color:var(--text);}
+  .muted{color:var(--muted);font-size:14px;}
+  input[type=text]{
+    width:100%;
+    padding:14px 16px;
+    font-size:16px;
+    border:2px solid #dfe6e4;
+    border-radius:12px;
+    outline:none;
+    transition:border-color .2s;
+  }
+  input[type=text]:focus{border-color:var(--green);}
+  .btn{
+    display:inline-block;
+    margin-top:18px;
+    padding:14px 22px;
+    background:var(--green);
+    color:#fff;
+    border:none;
+    border-radius:12px;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+    width:100%;
+    transition:background .2s, transform .1s;
+  }
+  .btn:hover{background:var(--green-dark);}
+  .btn:active{transform:scale(0.98);}
+  .btn.secondary{
+    background:#eef3f1;
+    color:var(--green-dark);
+  }
+  .btn.secondary:hover{background:#e0eae7;}
+  .btn.gold{
+    background:linear-gradient(135deg,var(--gold),#a8841e);
+    color:#fff;
+  }
+  .progress-bar{
+    height:8px;
+    background:#e9eeec;
+    border-radius:6px;
+    overflow:hidden;
+    margin-bottom:18px;
+  }
+  .progress-fill{
+    height:100%;
+    background:linear-gradient(90deg,var(--green),var(--gold));
+    width:0%;
+    transition:width .25s ease;
+  }
+  .q-count{
+    font-size:13px;
+    color:var(--muted);
+    margin-bottom:6px;
+    font-weight:600;
+    letter-spacing:.5px;
+  }
+  .q-text{
+    font-size:19px;
+    font-weight:600;
+    margin:4px 0 18px;
+    color:var(--text);
+    line-height:1.4;
+  }
+  .hint{
+    font-size:13px;
+    color:var(--muted);
+    margin-top:8px;
+  }
+  .feedback{
+    margin-top:12px;
+    font-size:14px;
+    font-weight:600;
+    min-height:20px;
+  }
+  .feedback.correct{color:#127a3e;}
+  .feedback.wrong{color:#b93a3a;}
+  .footer-note{
+    text-align:center;
+    margin-top:16px;
+    font-size:12px;
+    color:rgba(255,255,255,0.75);
+  }
+  .row{display:flex;gap:10px;}
+  .row .btn{margin-top:0;}
+
+  /* Result screen */
+  .grade-badge{
+    display:inline-block;
+    font-size:44px;
+    font-weight:800;
+    color:var(--green-dark);
+    margin:6px 0;
+  }
+  .score-line{
+    font-size:16px;
+    margin-bottom:4px;
+  }
+  .score-line b{font-size:20px;}
+
+  /* Certificate */
+  .cert-outer{
+    background:#fbf7ec;
+    border:10px solid var(--green);
+    border-radius:10px;
+    padding:28px 22px;
+    position:relative;
+    margin:20px 0;
+    overflow:hidden;
+  }
+  .cert-outer::before{
+    content:"";
+    position:absolute;
+    inset:8px;
+    border:2px solid var(--gold);
+    border-radius:4px;
+    pointer-events:none;
+  }
+  .cert-eagle{
+    font-size:30px;
+    margin-bottom:4px;
+  }
+  .cert-title{
+    font-size:22px;
+    font-weight:800;
+    color:var(--green-dark);
+    letter-spacing:1px;
+    margin:4px 0 2px;
+  }
+  .cert-subtitle{
+    font-size:13px;
+    color:var(--muted);
+    letter-spacing:2px;
+    text-transform:uppercase;
+    margin-bottom:16px;
+  }
+  .cert-name{
+    font-size:26px;
+    font-weight:700;
+    color:var(--text);
+    margin:10px 0;
+    border-bottom:2px solid var(--gold);
+    display:inline-block;
+    padding-bottom:4px;
+  }
+  .cert-body{
+    font-size:14.5px;
+    color:var(--text);
+    line-height:1.6;
+    margin:14px 0;
+  }
+  .cert-grade-row{
+    display:flex;
+    justify-content:center;
+    gap:26px;
+    margin:18px 0 8px;
+    flex-wrap:wrap;
+  }
+  .cert-stat{
+    text-align:center;
+  }
+  .cert-stat .num{
+    font-size:26px;
+    font-weight:800;
+    color:var(--green-dark);
+    display:block;
+  }
+  .cert-stat .lbl{
+    font-size:11px;
+    color:var(--muted);
+    text-transform:uppercase;
+    letter-spacing:1px;
+  }
+  .cert-footer{
+    display:flex;
+    justify-content:space-between;
+    margin-top:22px;
+    font-size:11px;
+    color:var(--muted);
+  }
+  .cert-seal{
+    width:64px;height:64px;
+    border-radius:50%;
+    border:3px solid var(--gold);
+    display:flex;align-items:center;justify-content:center;
+    margin:0 auto 10px;
+    font-size:26px;
+    color:var(--gold);
+    background:#fff;
+  }
+  .center{text-align:center;}
+  .hidden{display:none !important;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- START SCREEN -->
+  <div class="card" id="screen-start">
+    <div class="logo-row">
+      <div class="logo-badge">🏛</div>
+      <div>
+        <h1>Tarix-ku</h1>
+        <div class="muted">O'zbekiston tarixi fanidan milliy sertifikat testi</div>
+      </div>
+    </div>
+    <p>Test <b>45 ta savoldan</b> iborat. Har bir savolga javobingizni <b>bitta so'z</b> bilan yozing (shaxs ismi, sulola nomi yoki shahar nomi). Katta-kichik harf va tinish belgilari (masalan <i>o‘, g‘</i>) muhim emas.</p>
+    <p class="muted">Natijangizga qarab quyidagi darajalardan biri beriladi:</p>
+    <p class="muted">
+      A+ — 40/45 &nbsp;•&nbsp; A — 35/45 &nbsp;•&nbsp; B+ — 30/45 &nbsp;•&nbsp; B — 25/45 &nbsp;•&nbsp; C+ — 20/45 &nbsp;•&nbsp; C — 15/45
+    </p>
+    <label for="inp-name" class="muted">Ism va familiyangiz (sertifikatda chiqadi):</label><br>
+    <input type="text" id="inp-name" placeholder="Masalan: Shohjahon Olimjonov" style="margin-top:8px;">
+    <button class="btn" onclick="startQuiz()">Testni boshlash</button>
+  </div>
+
+  <!-- QUIZ SCREEN -->
+  <div class="card hidden" id="screen-quiz">
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+    <div class="q-count" id="q-count">SAVOL 1 / 45</div>
+    <div class="q-text" id="q-text">...</div>
+    <input type="text" id="inp-answer" autocomplete="off" placeholder="Javobingizni yozing...">
+    <div class="feedback" id="feedback"></div>
+    <button class="btn" id="btn-next" onclick="submitAnswer()">Javobni tasdiqlash</button>
+  </div>
+
+  <!-- RESULT SCREEN -->
+  <div class="card hidden" id="screen-result">
+    <div class="center">
+      <h1>Natijangiz tayyor!</h1>
+      <div class="grade-badge" id="res-grade">-</div>
+      <div class="score-line">To'g'ri javoblar: <b id="res-correct">0</b> / 45</div>
+      <div class="score-line">Ball: <b id="res-ball">0</b> / 75</div>
+    </div>
+
+    <div id="cert-block" class="hidden">
+      <div class="cert-outer" id="cert-node">
+        <div class="center">
+          <div class="cert-eagle">🦅</div>
+          <div class="cert-title">MILLIY SERTIFIKAT</div>
+          <div class="cert-subtitle">O'zbekiston tarixi faniga oid bilim darajasi</div>
+          <div class="cert-seal">★</div>
+          <div class="cert-body">Ushbu sertifikat</div>
+          <div class="cert-name" id="cert-name">Ism Familiya</div>
+          <div class="cert-body">
+            45 ta savoldan <b id="cert-correct">0</b> tasiga to'g'ri javob berib,<br>
+            <b id="cert-grade">-</b> darajasiga erishganligini tasdiqlaydi.
+          </div>
+          <div class="cert-grade-row">
+            <div class="cert-stat"><span class="num" id="cert-ball">0</span><span class="lbl">Ball (75)</span></div>
+            <div class="cert-stat"><span class="num" id="cert-grade2">-</span><span class="lbl">Daraja</span></div>
+            <div class="cert-stat"><span class="num" id="cert-percent">0%</span><span class="lbl">Foiz</span></div>
+          </div>
+          <div class="cert-footer">
+            <span id="cert-date">00.00.0000</span>
+            <span>tarix-ku.uz</span>
+          </div>
+        </div>
+      </div>
+      <button class="btn gold" onclick="downloadCert()">Sertifikatni rasm sifatida yuklab olish</button>
+    </div>
+
+    <div id="no-cert-block" class="hidden">
+      <p class="center">Afsuski, sertifikat olish uchun kamida <b>15 ta</b> to'g'ri javob kerak. Qayta urinib ko'ring — bilimingizni mustahkamlab, yana keling!</p>
+    </div>
+
+    <button class="btn secondary" onclick="location.reload()">Testni qaytadan boshlash</button>
+  </div>
+
+  <div class="footer-note">Tarix-ku &middot; O'zbekiston tarixi (IV–XIII asr) darsligi asosida tuzilgan</div>
+</div>
+
+<script>
+// ---------- Normalization ----------
+function normalize(s){
+  if(!s) return "";
+  return s
+    .toLowerCase()
+    .replace(/[ʻʼ’‘`´'\-]/g,'')   // strip apostrophe/hyphen variants
+    .replace(/\s+/g,' ')
+    .trim();
+}
+
+// ---------- Question bank (45) ----------
+// Each answer list: normalized-comparison accepts any of the given raw strings after normalize()
+const QUESTIONS = [
+  {q:"Turk xoqonligiga kim asos solgan edi?", a:["bumin","bumin xoqon"]},
+  {q:"Turk xoqonligining dastlabki markazi qaysi tog' tizmasida bo'lgan?", a:["oltoy"]},
+  {q:"G'arbiy Turk xoqonligi taraqqiyoti qaysi xoqon (yabg'u) davriga to'g'ri keladi?", a:["ton","ton yabgu","tonyabgu"]},
+  {q:"Xioniylar davlatining markazi qaysi tarixiy o'lka bo'lgan?", a:["toxariston"]},
+  {q:"Xioniylar dastlab qaysi vohani egallashgan edi?", a:["zarafshon"]},
+  {q:"\"Eftaliylar\" nomi qaysi shoh ismidan olingan?", a:["eftalon"]},
+  {q:"Eftaliylarni yana qanday nom bilan ham atashgan?", a:["vaxshunvar"]},
+  {q:"Somoniylar sulolasi qaysi ajdod (shajara boshlovchisi) nomidan kelib chiqqan?", a:["somonxudot"]},
+  {q:"Movarounnahrni yagona hukmdorligi ostida birlashtirgan Somoniy amiri kim edi?", a:["nasr"]},
+  {q:"Ismoil Somoniy maqbarasi qaysi shaharda joylashgan?", a:["buxoro"]},
+  {q:"IX asr oxirida Nasr ibn Ahmad qaysi shaharni Movarounnahr markaziga aylantirdi?", a:["samarqand"]},
+  {q:"G'aznaviylar davlatiga asos solgan sarkarda kim edi?", a:["alptegin"]},
+  {q:"G'aznaviylar sulolasi nomi qaysi shahar nomidan olingan?", a:["gazna"]},
+  {q:"G'aznaviylarning siyosiy nufuzi qaysi hukmdor (977–997) davrida yanada oshdi?", a:["sabuktegin"]},
+  {q:"Qoraxoniylar nomi kelib chiqishi bog'liq bo'lgan Isfijob hokimi kim edi?", a:["bilgakul"]},
+  {q:"Isfijob shahri yana qanday nom bilan ham atalgan?", a:["sayram"]},
+  {q:"Ismoil Somoniy qaysi shaharni egallab, turkiy qabilalarni g'arbga chekintirgan?", a:["taroz"]},
+  {q:"Saljuqiylar sulolasi nomini olgan qabila boshlig'ining ismi nima edi?", a:["saljuq","saljuk"]},
+  {q:"Marvdagi mashhur maqbara qaysi buyuk sulton nomi bilan ataladi?", a:["sanjar","sulton sanjar"]},
+  {q:"Xorazmshohlar (Anushteginiylar) sulolasiga kim asos solgan?", a:["anushtegin"]},
+  {q:"Anushtegin qaysi saljuqiy sulton xizmatidagi ishonchli mansabdor edi?", a:["malikshoh"]},
+  {q:"Otsiz Xorazm hokimi bo'lgan kimning o'g'li edi?", a:["qutbiddin","qutbiddin muhammad"]},
+  {q:"Muhammad ibn Muso al-Xorazmiy qaysi shaharda tug'ilgan?", a:["xiva"]},
+  {q:"\"Algoritm\" atamasi qaysi buyuk olim nomidan kelib chiqqan?", a:["xorazmiy","al-xorazmiy","alxorazmiy"]},
+  {q:"Al-Xorazmiyning \"Al-jabr val-muqobala\" risolasidan qaysi fan nomi kelib chiqqan?", a:["algebra"]},
+  {q:"Ahmad Farg'oniy G'arb olamida qanday nom bilan mashhur bo'lgan?", a:["alfraganus"]},
+  {q:"Ahmad Farg'oniy qaysi qishloqda (Farg'ona vodiysida) tug'ilgan?", a:["quva","qubo"]},
+  {q:"Ahmad Farg'oniy qaysi shahardagi rasadxonada ilmiy faoliyat olib borgan?", a:["bagdod"]},
+  {q:"Abu Nasr Forobiy qaysi shaharda tug'ilgan?", a:["forob"]},
+  {q:"Forob shahri boshqa qanday nom bilan ham atalgan?", a:["otror"]},
+  {q:"Forobiy qadimgi qaysi buyuk faylasufdan keyin \"ikkinchi muallim\" deb atalgan?", a:["arastu","aristotel"]},
+  {q:"Abu Rayhon Beruniy qaysi qadimiy shaharda tug'ilgan?", a:["kot"]},
+  {q:"Abu Rayhon Beruniy qaysi shaharda vafot etgan?", a:["gazna"]},
+  {q:"Abu Ali ibn Sino qaysi qishloqda tug'ilgan?", a:["afshona"]},
+  {q:"Ibn Sino qaysi shaharda (Eronda) vafot etgan?", a:["hamadon"]},
+  {q:"Ibn Sino G'arb olamida qanday nom bilan mashhur bo'lgan?", a:["avitsenna"]},
+  {q:"Imom Buxoriyning nisbasi (laqabi) qaysi shahar nomidan olingan?", a:["buxoro"]},
+  {q:"Termiz shahridan yetishib chiqqan mashhur hadisshunos olim kim edi?", a:["termiziy","imom termiziy"]},
+  {q:"Xorazm vohasi qaysi sahroga tutashib ketgan?", a:["qoraqum"]},
+  {q:"Amudaryo qaysi tog' massasining muzliklaridan boshlanadi?", a:["hindiqush"]},
+  {q:"Turk xoqonligi g'arbda qaysi dengizgacha yetib borgan?", a:["kaspiy","kaspiy dengizi"]},
+  {q:"Bahrom Chubin qaysi sosoniy shoh qo'shinining qo'mondoni bo'lgan?", a:["xurmazd","xurmazd iv"]},
+  {q:"Qarluq, chigil va yag'mo kabi turkiy qabilalar asosida qaysi davlat vujudga kelgan?", a:["qoraxoniylar"]},
+  {q:"O'zbek xalqi shakllangan qadimiy tarixiy o'lka qanday nomlangan?", a:["turkiston"]},
+  {q:"Beruniy tug'ilgan Kot shahri qaysi o'lka hududida joylashgan edi?", a:["xorazm"]}
+];
+
+// sanity: keep exactly 45
+console.assert(QUESTIONS.length === 45, "Savollar soni 45 bo'lishi kerak");
+
+let current = 0;
+let correctCount = 0;
+let userName = "";
+
+function startQuiz(){
+  const nameVal = document.getElementById('inp-name').value.trim();
+  if(!nameVal){
+    alert("Iltimos, ism va familiyangizni kiriting.");
+    return;
+  }
+  userName = nameVal;
+  document.getElementById('screen-start').classList.add('hidden');
+  document.getElementById('screen-quiz').classList.remove('hidden');
+  current = 0;
+  correctCount = 0;
+  renderQuestion();
+}
+
+function renderQuestion(){
+  const item = QUESTIONS[current];
+  document.getElementById('q-count').textContent = "SAVOL " + (current+1) + " / " + QUESTIONS.length;
+  document.getElementById('q-text').textContent = item.q;
+  document.getElementById('inp-answer').value = "";
+  document.getElementById('feedback').textContent = "";
+  document.getElementById('feedback').className = "feedback";
+  document.getElementById('btn-next').textContent = (current === QUESTIONS.length-1) ? "Testni yakunlash" : "Javobni tasdiqlash";
+  document.getElementById('progress-fill').style.width = (current/QUESTIONS.length*100) + "%";
+  document.getElementById('inp-answer').focus();
+}
+
+document.addEventListener('keydown', function(e){
+  if(e.key === 'Enter'){
+    const quizVisible = !document.getElementById('screen-quiz').classList.contains('hidden');
+    if(quizVisible) submitAnswer();
+    const startVisible = !document.getElementById('screen-start').classList.contains('hidden');
+    if(startVisible) startQuiz();
+  }
+});
+
+let locked = false;
+function submitAnswer(){
+  if(locked) return;
+  const item = QUESTIONS[current];
+  const raw = document.getElementById('inp-answer').value;
+  const norm = normalize(raw);
+  const isCorrect = item.a.some(ans => normalize(ans) === norm) && norm.length>0;
+
+  if(isCorrect) correctCount++;
+
+  locked = true;
+  const fb = document.getElementById('feedback');
+  if(isCorrect){
+    fb.textContent = "To'g'ri! ✓";
+    fb.className = "feedback correct";
+  } else {
+    fb.textContent = "Noto'g'ri. To'g'ri javob: " + item.a[0];
+    fb.className = "feedback wrong";
+  }
+
+  setTimeout(function(){
+    locked = false;
+    current++;
+    if(current >= QUESTIONS.length){
+      finishQuiz();
+    } else {
+      renderQuestion();
+    }
+  }, 900);
+}
+
+function getGrade(correct){
+  if(correct >= 40) return "A+";
+  if(correct >= 35) return "A";
+  if(correct >= 30) return "B+";
+  if(correct >= 25) return "B";
+  if(correct >= 20) return "C+";
+  if(correct >= 15) return "C";
+  return null;
+}
+
+function finishQuiz(){
+  document.getElementById('progress-fill').style.width = "100%";
+  document.getElementById('screen-quiz').classList.add('hidden');
+  document.getElementById('screen-result').classList.remove('hidden');
+
+  const grade = getGrade(correctCount);
+  const ball = Math.round(correctCount * 75 / QUESTIONS.length);
+  const percent = Math.round(correctCount/QUESTIONS.length*100);
+
+  document.getElementById('res-correct').textContent = correctCount;
+  document.getElementById('res-ball').textContent = ball;
+  document.getElementById('res-grade').textContent = grade ? grade : "—";
+
+  if(grade){
+    document.getElementById('cert-block').classList.remove('hidden');
+    document.getElementById('no-cert-block').classList.add('hidden');
+
+    document.getElementById('cert-name').textContent = userName;
+    document.getElementById('cert-correct').textContent = correctCount;
+    document.getElementById('cert-grade').textContent = grade;
+    document.getElementById('cert-grade2').textContent = grade;
+    document.getElementById('cert-ball').textContent = ball;
+    document.getElementById('cert-percent').textContent = percent + "%";
+
+    const d = new Date();
+    const dateStr = String(d.getDate()).padStart(2,'0') + "." + String(d.getMonth()+1).padStart(2,'0') + "." + d.getFullYear();
+    document.getElementById('cert-date').textContent = dateStr;
+  } else {
+    document.getElementById('cert-block').classList.add('hidden');
+    document.getElementById('no-cert-block').classList.remove('hidden');
+  }
+}
+
+function downloadCert(){
+  const node = document.getElementById('cert-node');
+  html2canvas(node, {scale:3, backgroundColor:'#fbf7ec'}).then(function(canvas){
+    const link = document.createElement('a');
+    link.download = 'sertifikat_' + userName.replace(/\s+/g,'_') + '.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+  });
+}
+</script>
+</body>
+</html>
