@@ -33,17 +33,25 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
-        h1, h2 {
+        h1 {
             color: var(--primary-color);
             text-align: center;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #64748b;
+            margin-top: 0;
+            margin-bottom: 20px;
         }
 
         .scale-info {
             background: #e0f2fe;
             border: 1px solid #7dd3fc;
-            padding: 12px;
+            padding: 15px;
             border-radius: 8px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             font-size: 14px;
         }
 
@@ -62,15 +70,18 @@
             border: 1px solid var(--border-color);
             border-radius: 6px;
             font-size: 16px;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .section-title {
             background: var(--primary-color);
             color: white;
-            padding: 10px 15px;
+            padding: 12px 15px;
             border-radius: 6px;
             margin-top: 30px;
             font-size: 18px;
+            font-weight: bold;
         }
 
         .question-card {
@@ -88,8 +99,8 @@
 
         .options label {
             display: block;
-            padding: 8px 12px;
-            margin: 5px 0;
+            padding: 10px 12px;
+            margin: 6px 0;
             background: #f8fafc;
             border: 1px solid var(--border-color);
             border-radius: 6px;
@@ -117,27 +128,29 @@
 
         th, td {
             padding: 10px;
-            text-align: center;
+            text-align: left;
         }
 
         th {
             background-color: #f1f5f9;
+            text-align: center;
         }
 
         textarea {
             width: 100%;
-            height: 80px;
+            height: 90px;
             padding: 10px;
             border: 1px solid var(--border-color);
             border-radius: 6px;
             resize: vertical;
             box-sizing: border-box;
+            font-family: inherit;
         }
 
         button.submit-btn {
             display: block;
             width: 100%;
-            padding: 15px;
+            padding: 16px;
             background: var(--success-color);
             color: white;
             border: none;
@@ -146,10 +159,17 @@
             font-weight: bold;
             cursor: pointer;
             margin-top: 30px;
+            transition: 0.2s;
         }
 
         button.submit-btn:hover {
             background: #15803d;
+        }
+
+        @media (max-width: 600px) {
+            .user-info {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -157,11 +177,11 @@
 
 <div class="container">
     <h1>Tarix-ku | Milliy Sertifikat Test Tizimi</h1>
-    <p style="text-align: center; color: #64748b;">Mavzu: O'rta asrlar jahon tarixi (7-sinf)</p>
+    <p class="subtitle">Mavzu: O'rta asrlar jahon tarixi (7-sinf)</p>
     
     <div class="scale-info">
-        <b>Baholash shkalasi (Maksimal 75 ball):</b><br>
-        • A+: 75 ball (100%) | • A: 65 ball | • B+: 63 ball | • B: 60 ball | • C+: 52 ball | • C: 46 ball
+        <b>📌 Baholash shkalasi (Maksimal 75 ball):</b><br>
+        • <b>A+</b>: 75 ball (100%) | • <b>A</b>: 65 ball | • <b>B+</b>: 63 ball | • <b>B</b>: 60 ball | • <b>C+</b>: 52 ball | • <b>C</b>: 46 ball
     </div>
 
     <div class="user-info">
@@ -534,7 +554,7 @@
         </div>
     </div>
 
-    <!-- II BO'LIM: YOZMA SAVOLLAR (36-45, Har biri maks 2.25 ball — Jami: 22.5 ball) -->
+    <!-- II BO'LIM: YOZMA SAVOLLAR (36-45) -->
     <div class="section-title">II Bo'lim. Yozma topshiriqlar (36-45, Har biri maks 2.25 ball — Jami: 22.5 ball)</div>
 
     <div class="question-card">
@@ -591,8 +611,9 @@
 </div>
 
 <script>
+    // Telegram Bot Ma'lumotlari
     const TELEGRAM_BOT_TOKEN = "7820129181:AAFU9I_shohjaxon_tarix_ku_bot";
-    const TELEGRAM_CHAT_ID = "YOUR_CHAT_ID"; // O'zingizning chat ID'ingizni kiriting
+    const TELEGRAM_CHAT_ID = "YOUR_CHAT_ID"; // Bu yerga o'zingizning shaxsiy Chat ID'ingizni yozing!
 
     function calculateGrade(totalScore) {
         if (totalScore >= 75) return "A+ (Maksimal Natija - 100%)";
@@ -613,6 +634,7 @@
             return;
         }
 
+        // To'g'ri kalitlar
         const keys = {
             q1: "A", q2: "A", q3: "A", q4: "A", q5: "A",
             q6: "A", q7: "A", q8: "A", q9: "A", q10: "A",
@@ -624,7 +646,7 @@
         };
 
         let closedCorrectCount = 0;
-        for(let i=1; i<=35; i++) {
+        for(let i = 1; i <= 35; i++) {
             const selected = document.querySelector(`input[name="q${i}"]:checked`);
             const ans = selected ? selected.value : "Belgilanmadi";
             if(ans === keys[`q${i}`]) {
@@ -632,7 +654,7 @@
             }
         }
 
-        // Yopiq testlar: 35 ta * 1.5 ball = 52.5 ball max
+        // 35 ta yopiq test: 35 * 1.5 = 52.5 ball max
         let closedTestScore = closedCorrectCount * 1.5; 
         let currentTotal = closedTestScore;
         let gradeResult = calculateGrade(currentTotal);
@@ -642,11 +664,11 @@
         testSummary += `📞 **Raqam:** ${phone}\n\n`;
         testSummary += `📊 **Yopiq testlar:** ${closedCorrectCount}/35 (${closedTestScore} ball / max 52.5)\n`;
         testSummary += `📝 **Ochiq testlar:** Tekshirish kutilmoqda (max 22.5 ball)\n`;
-        testSummary += `⭐ **Yopiq test bo'yicha to'plangan ball:** ${currentTotal} / 75 ball\n`;
+        testSummary += `⭐ **Yopiq test bo'yicha ball:** ${currentTotal} / 75 ball\n`;
         testSummary += `🏅 **Hozirgi Daraja:** ${gradeResult}\n\n`;
         testSummary += `--- **Ochiq Savollar Javoblari** ---\n`;
 
-        for(let j=36; j<=45; j++) {
+        for(let j = 36; j <= 45; j++) {
             const openAns = document.getElementById(`q${j}`).value || "Javob yozilmadi";
             testSummary += `\n📝 **${j}-savol:**\n${openAns}\n`;
         }
