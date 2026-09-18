@@ -166,16 +166,85 @@
             background: #15803d;
         }
 
-        @media (max-width: 600px) {
-            .user-info {
-                grid-template-columns: 1fr;
+        /* Sertifikat uslubi */
+        #certificate-wrapper {
+            display: none;
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .certificate {
+            border: 10px solid #1e3a8a;
+            padding: 40px;
+            background: #fffdfa;
+            position: relative;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            border-radius: 12px;
+        }
+
+        .certificate h2 {
+            font-size: 32px;
+            color: #1e3a8a;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .certificate .student-name {
+            font-size: 28px;
+            font-weight: bold;
+            color: #d97706;
+            margin: 20px 0;
+            border-bottom: 2px solid #d97706;
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        .certificate .badge {
+            font-size: 22px;
+            font-weight: bold;
+            background: #1e3a8a;
+            color: #fff;
+            padding: 8px 20px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-top: 15px;
+        }
+
+        .print-btn {
+            margin-top: 20px;
+            padding: 12px 25px;
+            background: #0284c7;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #certificate-wrapper, #certificate-wrapper * {
+                visibility: visible;
+            }
+            #certificate-wrapper {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                display: block !important;
+            }
+            .print-btn {
+                display: none;
             }
         }
     </style>
 </head>
 <body>
 
-<div class="container">
+<div class="container" id="main-test">
     <h1>Tarix-ku | Milliy Sertifikat Test Tizimi</h1>
     <p class="subtitle">Mavzu: O'rta asrlar jahon tarixi (7-sinf)</p>
     
@@ -186,11 +255,11 @@
 
     <div class="user-info">
         <input type="text" id="studentName" placeholder="Ism va Familiyangiz" required>
-        <input type="text" id="studentPhone" placeholder="Telegram raqamingiz" required>
+        <input type="text" id="studentPhone" placeholder="Telefon raqamingiz" required>
     </div>
 
     <!-- I BO'LIM: YOPIQ TESTLAR (1-35) -->
-    <div class="section-title">I Bo'lim. Yopiq testlar (1-35, Har bir to'g'ri javob: 1.5 ball — Jami: 52.5 ball)</div>
+    <div class="section-title">I Bo'lim. Yopiq testlar (1-35, Har bir to'g'ri javob: 1.5 ball)</div>
 
     <div class="question-card">
         <div class="question-title">1. Quyidagi jadvalda berilgan ma'lumotlarni tahlil qilib, to'g'ri moslikni toping:</div>
@@ -555,7 +624,7 @@
     </div>
 
     <!-- II BO'LIM: YOZMA SAVOLLAR (36-45) -->
-    <div class="section-title">II Bo'lim. Yozma topshiriqlar (36-45, Har biri maks 2.25 ball — Jami: 22.5 ball)</div>
+    <div class="section-title">II Bo'lim. Yozma topshiriqlar (36-45, Har biri maks 2.25 ball)</div>
 
     <div class="question-card">
         <div class="question-title">36-savol: Franklar davlatida Karl Martell o'tkazgan Benefitsiy islohotining mazmuni va ta'sirini tushuntiring.</div>
@@ -607,22 +676,58 @@
         <textarea id="q45" placeholder="Javobingizni yozing..."></textarea>
     </div>
 
-    <button class="submit-btn" onclick="submitTest()">Testni yakunlash va Telegramga yuborish</button>
+    <button class="submit-btn" onclick="submitTest()">Testni yakunlash va natijani ko'rish</button>
+</div>
+
+<!-- SERTIFIKAT BO'LIMI -->
+<div id="certificate-wrapper" class="container">
+    <div class="certificate">
+        <h2>MILLIY SERTIFIKAT</h2>
+        <p>Ushbu sertifikat Tarix fanidan bilim darajasini muvaffaqiyatli topshirgani uchun berildi:</p>
+        <div class="student-name" id="cert-name">Ism Familiya</div>
+        <p>Jami to'plangan ball: <b id="cert-score">0</b> / 75 ball</p>
+        <div class="badge" id="cert-grade">DARAJA: A+</div>
+        <p style="margin-top: 30px; font-size: 12px; color: #777;">Tarix-ku Avtomatlashtirilgan Tizimi • Berilgan vaqti: <span id="cert-date"></span></p>
+    </div>
+    <button class="print-btn" onclick="window.print()">Sertifikatni yuklab olish / Chop etish</button>
 </div>
 
 <script>
-    // Telegram Bot Ma'lumotlari
-    const TELEGRAM_BOT_TOKEN = "7820129181:AAFU9I_shohjaxon_tarix_ku_bot";
-    const TELEGRAM_CHAT_ID = "YOUR_CHAT_ID"; // Bu yerga o'zingizning shaxsiy Chat ID'ingizni yozing!
+    // 60% O'xshashlikni hisoblaydigan funksiya
+    function checkSimilarity(userText, keywords) {
+        if(!userText || userText.trim().length === 0) return 0;
+        let text = userText.toLowerCase();
+        let matchCount = 0;
+        keywords.forEach(word => {
+            if(text.includes(word.toLowerCase())) {
+                matchCount++;
+            }
+        });
+        return matchCount / keywords.length;
+    }
+
+    // Ochiq savollarning kalit so'zlari
+    const openKeywords = {
+        q36: ["harbiy", "yer", "benefitsiy", "otliq", "puate"],
+        q37: ["imperator", "rim", "papa", "vizantiya", "obro'"],
+        q38: ["bo'linish", "verden", "fransiya", "germaniya", "italiya"],
+        q39: ["flot", "daniyaliklar", "qal'a", "islohot", "qo'shin"],
+        q40: ["gastings", "yer", "ro'yxat", "normann", "feodal"],
+        q41: ["otton", "rim", "papa", "cherkov", "imperiya"],
+        q42: ["savdo", "poytaxt", "konstantinopol", "iqtisodiyot", "devor"],
+        q43: ["alifbo", "kirill", "mefodiy", "yozuv", "xristian"],
+        q44: ["rus haqiqati", "qonun", "sofiya", "kutuqxona", "madaniyat"],
+        q45: ["diniy", "vizantiya", "rim", "katolik", "pravoslav"]
+    };
 
     function calculateGrade(totalScore) {
-        if (totalScore >= 75) return "A+ (Maksimal Natija - 100%)";
-        if (totalScore >= 65) return "A (Sertifikat)";
-        if (totalScore >= 63) return "B+ (Sertifikat)";
-        if (totalScore >= 60) return "B (Sertifikat)";
-        if (totalScore >= 52) return "C+ (Sertifikat)";
-        if (totalScore >= 46) return "C (Sertifikat)";
-        return "Sertifikat darajasiga yetmadi";
+        if (totalScore >= 75) return "A+";
+        if (totalScore >= 65) return "A";
+        if (totalScore >= 63) return "B+";
+        if (totalScore >= 60) return "B";
+        if (totalScore >= 52) return "C+";
+        if (totalScore >= 46) return "C";
+        return "Sertifikat ololmadi";
     }
 
     function submitTest() {
@@ -634,7 +739,7 @@
             return;
         }
 
-        // To'g'ri kalitlar
+        // Yopiq test kalitlari
         const keys = {
             q1: "A", q2: "A", q3: "A", q4: "A", q5: "A",
             q6: "A", q7: "A", q8: "A", q9: "A", q10: "A",
@@ -645,48 +750,47 @@
             q31: "A", q32: "A", q33: "A", q34: "A", q35: "A"
         };
 
+        // 1. Yopiq testlarni tekshirish
         let closedCorrectCount = 0;
         for(let i = 1; i <= 35; i++) {
             const selected = document.querySelector(`input[name="q${i}"]:checked`);
-            const ans = selected ? selected.value : "Belgilanmadi";
+            const ans = selected ? selected.value : "";
             if(ans === keys[`q${i}`]) {
                 closedCorrectCount++;
             }
         }
+        let closedScore = closedCorrectCount * 1.5;
 
-        // 35 ta yopiq test: 35 * 1.5 = 52.5 ball max
-        let closedTestScore = closedCorrectCount * 1.5; 
-        let currentTotal = closedTestScore;
-        let gradeResult = calculateGrade(currentTotal);
-
-        let testSummary = `📌 **Tarix-ku | Yangi Test Topshirildi!**\n\n`;
-        testSummary += `👤 **O'quvchi:** ${name}\n`;
-        testSummary += `📞 **Raqam:** ${phone}\n\n`;
-        testSummary += `📊 **Yopiq testlar:** ${closedCorrectCount}/35 (${closedTestScore} ball / max 52.5)\n`;
-        testSummary += `📝 **Ochiq testlar:** Tekshirish kutilmoqda (max 22.5 ball)\n`;
-        testSummary += `⭐ **Yopiq test bo'yicha ball:** ${currentTotal} / 75 ball\n`;
-        testSummary += `🏅 **Hozirgi Daraja:** ${gradeResult}\n\n`;
-        testSummary += `--- **Ochiq Savollar Javoblari** ---\n`;
-
+        // 2. Ochiq savollarni avtomatik tekshirish (60% mezon bo'yicha)
+        let openScore = 0;
         for(let j = 36; j <= 45; j++) {
-            const openAns = document.getElementById(`q${j}`).value || "Javob yozilmadi";
-            testSummary += `\n📝 **${j}-savol:**\n${openAns}\n`;
+            let userAns = document.getElementById(`q${j}`).value;
+            let ratio = checkSimilarity(userAns, openKeywords[`q${j}`]);
+            
+            if(ratio >= 0.6) {
+                openScore += 2.25;
+            } else if(ratio >= 0.3) {
+                openScore += 1.125;
+            }
         }
 
-        fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                chat_id: TELEGRAM_CHAT_ID,
-                text: testSummary,
-                parse_mode: 'Markdown'
-            })
-        }).then(response => {
-            alert(`Javoblar yuborildi!\nYopiq test bali: ${closedTestScore} ball\nTaxminiy daraja: ${gradeResult}`);
-        }).catch(error => {
-            alert("Xatolik yuz berdi. Bot sozlamalarini tekshiring.");
-            console.error(error);
-        });
+        let totalScore = closedScore + openScore;
+        let grade = calculateGrade(totalScore);
+
+        alert(`Test yakunlandi!\n\nYopiq testlar bali: ${closedScore}\nYozma savollar bali: ${openScore}\nJami ball: ${totalScore} / 75\nDaraja: ${grade}`);
+
+        // Agar sertifikat darajasiga yetsa (C va undan yuqori)
+        if(totalScore >= 46) {
+            document.getElementById('cert-name').innerText = name;
+            document.getElementById('cert-score').innerText = totalScore;
+            document.getElementById('cert-grade').innerText = "DARAJA: " + grade;
+            document.getElementById('cert-date').innerText = new Date().toLocaleDateString('uz-UZ');
+            
+            document.getElementById('certificate-wrapper').style.display = 'block';
+            document.getElementById('certificate-wrapper').scrollIntoView({ behavior: 'smooth' });
+        } else {
+            alert("Afsuski, sertifikat olish uchun minimal 46 ball to'play olmadingiz.");
+        }
     }
 </script>
 
